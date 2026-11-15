@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef } from 'react';
-import { AnimatePresence, motion, useReducedMotion, type PanInfo } from 'framer-motion';
+import { AnimatePresence, m, useReducedMotion, type PanInfo } from 'framer-motion';
 import { imageEntry, srcSet, largestSrc } from './Img';
 import { ChevronLeft, ChevronRight, Close } from './Icons';
 
@@ -72,7 +72,7 @@ export function Lightbox({ group, items, index, onChange, labels }: Props) {
   return (
     <AnimatePresence>
       {open && item && entry && (
-        <motion.div
+        <m.div
           ref={dialog}
           role="dialog"
           aria-modal="true"
@@ -100,7 +100,7 @@ export function Lightbox({ group, items, index, onChange, labels }: Props) {
           </div>
 
           <div className="relative flex min-h-0 flex-1 items-center justify-center px-2 pb-4 sm:px-20" onClick={(e) => { if (e.target === e.currentTarget) onChange(null); }}>
-            <motion.figure
+            <m.figure
               key={item.name}
               layoutId={reduce ? undefined : `${group}-${item.name}`}
               className="relative flex max-h-full max-w-full flex-col items-center"
@@ -122,7 +122,7 @@ export function Lightbox({ group, items, index, onChange, labels }: Props) {
                 className="max-h-[calc(100svh-9rem)] w-auto max-w-full select-none object-contain shadow-[0_30px_80px_-20px_rgb(0_0_0/0.9)]"
               />
               {item.caption ? <figcaption className="mt-3 text-center text-[0.9rem] text-muted">{item.caption}</figcaption> : null}
-            </motion.figure>
+            </m.figure>
 
             {count > 1 && (
               <>
@@ -145,7 +145,7 @@ export function Lightbox({ group, items, index, onChange, labels }: Props) {
               </>
             )}
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

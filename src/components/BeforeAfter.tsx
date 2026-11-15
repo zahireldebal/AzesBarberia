@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import type { Dict } from '@/i18n/es';
-import { PRODUCTS } from '@/data/products';
 import { SERVICES } from '@/data/services';
 import { bookingUrl, whatsappUrl, type Lang } from '@/data/business';
 import { Img } from './Img';
@@ -21,7 +20,6 @@ export function BeforeAfter({ t, lang }: { t: Dict; lang: Lang }) {
   const [after, setAfter] = useState(false);
   const [touched, setTouched] = useState(false);
   const box = useRef<HTMLDivElement>(null);
-  const wax = PRODUCTS.find((p) => p.id === 'cera-en-polvo')!;
   const haircut = SERVICES.find((s) => s.id === 'corte')!;
 
   useEffect(() => {
@@ -70,10 +68,10 @@ export function BeforeAfter({ t, lang }: { t: Dict; lang: Lang }) {
             if (e.key === 'ArrowLeft') choose(false);
           }}
         >
-          <button type="button" aria-pressed={!after} onClick={() => choose(false)} className={`btn ${!after ? 'btn-gold' : 'btn-line'}`}>
+          <button type="button" aria-pressed={!after} onClick={() => choose(false)} className={`btn ${!after ? 'btn-cream' : 'btn-line'}`}>
             {t.beforeAfter.before}
           </button>
-          <button type="button" aria-pressed={after} onClick={() => choose(true)} className={`btn ${after ? 'btn-gold' : 'btn-line'}`}>
+          <button type="button" aria-pressed={after} onClick={() => choose(true)} className={`btn ${after ? 'btn-cream' : 'btn-line'}`}>
             {t.beforeAfter.after}
           </button>
         </div>
@@ -87,13 +85,6 @@ export function BeforeAfter({ t, lang }: { t: Dict; lang: Lang }) {
         <SuitRule className="mt-5 max-w-[12rem]" />
         <p className="mt-5 text-lg text-cream/90">{t.beforeAfter.lead}</p>
 
-        <h4 className="mt-8 text-[0.85rem] font-bold uppercase tracking-[0.14em] text-gold-hi">{t.beforeAfter.benefitsTitle}</h4>
-        <ul className="mt-3 space-y-1.5">
-          {wax.benefits[lang].map((b) => (
-            <li key={b} className="flex gap-3"><span aria-hidden className="mt-[0.75em] h-px w-3 shrink-0 bg-gold" />{b}</li>
-          ))}
-        </ul>
-
         <h4 className="mt-8 text-[0.85rem] font-bold uppercase tracking-[0.14em] text-gold-hi">{t.beforeAfter.howTitle}</h4>
         <ol className="mt-3 space-y-3">
           {t.beforeAfter.steps.map((s, i) => (
@@ -105,13 +96,13 @@ export function BeforeAfter({ t, lang }: { t: Dict; lang: Lang }) {
         </ol>
 
         <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-          <a href={whatsappUrl(t.beforeAfter.wantMessage)} target="_blank" rel="noopener" className="btn btn-gold">
+          <BookLink href={bookingUrl(lang, { serviceId: haircut.freshaId })} newTabLabel={t.book.newTab}>
+            {t.beforeAfter.bookCut}
+          </BookLink>
+          <a href={whatsappUrl(t.beforeAfter.wantMessage)} target="_blank" rel="noopener" className="btn btn-line">
             <WhatsApp className="text-lg" />
             {t.beforeAfter.want}
           </a>
-          <BookLink href={bookingUrl(lang, { serviceId: haircut.freshaId })} newTabLabel={t.book.newTab} className="btn btn-line">
-            {t.beforeAfter.bookCut}
-          </BookLink>
         </div>
         <p className="mt-3 text-[0.9rem] text-muted">{t.beforeAfter.addOnNote}</p>
       </div>

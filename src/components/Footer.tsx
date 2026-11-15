@@ -32,19 +32,21 @@ export function Footer({ t, bookHref }: { t: Dict; bookHref: string }) {
               ))}
             </ul>
           </nav>
-          <div className="text-cream/85">
+          <div className="text-cream/85 sm:text-center">
             <p>{BUSINESS.street}, {BUSINESS.corner}</p>
             <p>{BUSINESS.city}, Uruguay</p>
             <p className="mt-3">{t.hero.hours}</p>
-            <p className="mt-3"><a href={`tel:${BUSINESS.phoneE164}`} className="tabular text-cream/85 hover:text-gold-hi">{BUSINESS.phoneDisplay}</a></p>
           </div>
-          <div className="flex justify-center gap-3 sm:justify-start">
+          <div className="flex flex-col items-center gap-4 sm:items-end">
+            <a href={`tel:${BUSINESS.phoneE164}`} className="tabular text-cream/85 hover:text-gold-hi">{BUSINESS.phoneDisplay}</a>
+            <div className="flex gap-3">
             <a href={BUSINESS.instagram} target="_blank" rel="noopener" className="inline-flex size-12 items-center justify-center border border-line text-2xl text-cream hover:border-gold hover:text-gold-hi">
               <Instagram /><span className="sr-only">{t.footer.follow}</span>
             </a>
             <a href={whatsappUrl(t.whatsappHello)} target="_blank" rel="noopener" className="inline-flex size-12 items-center justify-center border border-line text-2xl text-cream hover:border-gold hover:text-gold-hi">
               <WhatsApp /><span className="sr-only">{t.footer.whatsapp}</span>
             </a>
+            </div>
           </div>
         </div>
 

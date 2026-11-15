@@ -13,19 +13,16 @@ export function Location({ t }: { t: Dict }) {
       <div className="wrap">
         <SectionHead id="local-title" title={t.location.title} intro={t.location.lead} />
 
-        {/* Photo mosaic: one wide shot and two verticals */}
-        <div className="mt-14 grid grid-cols-2 gap-2 md:grid-cols-4 md:grid-rows-2">
-          <div className="reveal frame col-span-2 aspect-[4/3] md:row-span-2 md:aspect-auto">
-            <Img name="local-salon" alt={t.location.photosAlt.salon} sizes="(min-width: 768px) 50vw, 100vw" className="size-full object-cover" />
+        {/* Photo mosaic: three portrait views of the floor and the mezzanine */}
+        <div className="mt-14 grid grid-cols-2 gap-2 md:grid-cols-3">
+          <div className="reveal frame col-span-2 aspect-[4/3] md:col-span-1 md:aspect-[4/5]">
+            <Img name="local-sillones" alt={t.location.photosAlt.sillones} sizes="(min-width: 768px) 33vw, 100vw" className="size-full object-cover" />
           </div>
-          <div className="reveal frame aspect-[3/4] md:aspect-auto md:h-full" style={{ '--i': 1 } as React.CSSProperties}>
-            <Img name="local-espejo" alt={t.location.photosAlt.espejo} sizes="(min-width: 768px) 25vw, 50vw" className="size-full object-cover" />
+          <div className="reveal frame aspect-[4/5]" style={{ '--i': 1 } as React.CSSProperties}>
+            <Img name="local-espejo" alt={t.location.photosAlt.espejo} sizes="(min-width: 768px) 33vw, 50vw" className="size-full object-cover" />
           </div>
-          <div className="reveal frame aspect-[3/4] md:aspect-auto md:h-full" style={{ '--i': 2 } as React.CSSProperties}>
-            <Img name="local-sillones" alt={t.location.photosAlt.sillones} sizes="(min-width: 768px) 25vw, 50vw" className="size-full object-cover" />
-          </div>
-          <div className="reveal frame col-span-2 aspect-[16/9] md:aspect-auto md:h-full" style={{ '--i': 3 } as React.CSSProperties}>
-            <Img name="local-lounge" alt={t.location.photosAlt.lounge} sizes="(min-width: 768px) 50vw, 100vw" className="size-full object-cover object-[50%_60%]" />
+          <div className="reveal frame aspect-[4/5]" style={{ '--i': 2 } as React.CSSProperties}>
+            <Img name="local-entrepiso" alt={t.location.photosAlt.entrepiso} sizes="(min-width: 768px) 33vw, 50vw" className="size-full object-cover" />
           </div>
         </div>
 

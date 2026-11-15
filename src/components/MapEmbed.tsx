@@ -31,7 +31,7 @@ export function MapEmbed({ label, note, title }: { label: string; note: string; 
             </g>
           </svg>
           <Pin className="relative text-4xl text-gold-hi transition-transform duration-300 group-hover:-translate-y-1" />
-          <span className="btn btn-gold btn-sm relative">{label}</span>
+          <span className="btn btn-line btn-sm relative">{label}</span>
           <span className="relative text-[0.8rem] text-muted">{note}</span>
         </button>
       )}

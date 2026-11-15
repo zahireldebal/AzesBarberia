@@ -13,6 +13,8 @@ import { Location } from './Location';
 import { FaqSection } from './FaqSection';
 import { Footer } from './Footer';
 import { MobileBar } from './MobileBar';
+import { MotionProvider } from './MotionProvider';
+import { PhotoBand } from './PhotoBand';
 
 function jsonLd(lang: Lang, t: Dict) {
   const url = lang === 'es' ? `${SITE_URL}/` : `${SITE_URL}/en/`;
@@ -79,13 +81,14 @@ export function Site({ t, lang }: { t: Dict; lang: Lang }) {
   const altLangHref = lang === 'es' ? '/en/' : '/';
 
   return (
-    <>
+    <MotionProvider>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd(lang, t)) }} />
       <Header t={t} bookHref={bookHref} homeHref={homeHref} altLangHref={altLangHref} />
       <main id="contenido">
         <Hero t={t} bookHref={bookHref} />
         <Services t={t} lang={lang} bookHref={bookHref} />
         <Team t={t} lang={lang} />
+        <PhotoBand alt={t.location.photosAlt.lounge} />
         <Products t={t} lang={lang}>
           <BeforeAfter t={t} lang={lang} />
         </Products>
@@ -96,6 +99,6 @@ export function Site({ t, lang }: { t: Dict; lang: Lang }) {
       </main>
       <Footer t={t} bookHref={bookHref} />
       <MobileBar t={t} bookHref={bookHref} />
-    </>
+    </MotionProvider>
   );
 }

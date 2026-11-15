@@ -11,8 +11,9 @@ export type Product = {
   category: ProductCategory;
   size?: string;
   price?: number;
-  image: string;
-  imageAlt: { es: string; en: string };
+  /** Processed image name; omit to show the typographic label panel instead. */
+  image?: string;
+  imageAlt?: { es: string; en: string };
   forWhom: { es: string; en: string };
   benefits: { es: string[]; en: string[] };
 };
@@ -44,8 +45,7 @@ export const PRODUCTS: Product[] = [
     category: 'styling',
     size: '50 ml',
     price: 450,
-    image: 'producto-pomada-mate',
-    imageAlt: { es: 'Pomada Mate BRB de 50 ml con sus características', en: 'BRB Matte Pomade, 50 ml, with its features' },
+    // No clean photo yet: the only source is a BRB promo graphic. See PENDIENTES.md.
     forWhom: { es: 'Pelo lacio u ondulado, medio o grueso', en: 'Straight or wavy, medium or thick hair' },
     benefits: {
       es: ['Textura y movimiento', 'Acabado mate natural', 'Sin brillo y sin grasa', 'Fijación fuerte todo el día'],

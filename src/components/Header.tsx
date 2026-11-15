@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
 import type { Dict } from '@/i18n/es';
 import { BookLink } from './BookLink';
 import { Close, MenuIcon } from './Icons';
@@ -118,7 +118,7 @@ export function Header({ t, bookHref, homeHref, altLangHref }: Props) {
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             id="menu-movil"
             ref={panel}
             role="dialog"
@@ -139,7 +139,7 @@ export function Header({ t, bookHref, homeHref, altLangHref }: Props) {
             <nav aria-label={t.nav.menu} className="mt-6 flex-1">
               <ul className="space-y-1">
                 {links.map(([href, label], i) => (
-                  <motion.li
+                  <m.li
                     key={href}
                     initial={reduce ? false : { opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -152,7 +152,7 @@ export function Header({ t, bookHref, homeHref, altLangHref }: Props) {
                     >
                       {label}
                     </a>
-                  </motion.li>
+                  </m.li>
                 ))}
               </ul>
             </nav>
@@ -160,7 +160,7 @@ export function Header({ t, bookHref, homeHref, altLangHref }: Props) {
             <BookLink href={bookHref} newTabLabel={t.book.newTab} className="btn btn-gold w-full">
               {t.book.primary}
             </BookLink>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

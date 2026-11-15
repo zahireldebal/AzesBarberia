@@ -1,5 +1,6 @@
 import type { Dict } from '@/i18n/es';
 import { BUSINESS } from '@/data/business';
+import { SERVICES } from '@/data/services';
 import { srcSet, imageEntry } from './Img';
 import { BookLink } from './BookLink';
 import { Clock, Pin, Star } from './Icons';
@@ -66,6 +67,9 @@ export function Hero({ t, bookHref }: Props) {
           className="hero-rise mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[0.9rem] text-cream/85"
           style={{ '--i': 3 } as React.CSSProperties}
         >
+          <li className="font-semibold text-cream">
+            {t.hero.pricesFrom} <span className="tabular text-gold-hi">$U {Math.min(...SERVICES.filter((s) => s.id !== 'barba').map((s) => s.priceFrom)).toLocaleString(t.locale)}</span>
+          </li>
           <li className="flex items-center gap-1.5">
             <Star className="text-gold-hi" />
             <span className="tabular font-semibold text-cream">{rating}</span> {t.hero.ratingLabel}

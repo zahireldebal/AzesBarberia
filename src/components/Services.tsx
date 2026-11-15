@@ -49,9 +49,8 @@ export function Services({ t, lang, bookHref }: Props) {
         </ol>
 
         <div className="reveal mx-auto mt-10 flex max-w-3xl flex-col items-center gap-4 text-center">
-          <p className="text-[0.9rem] text-muted">{t.services.note}</p>
+          <p className="max-w-xl text-[0.95rem] text-muted">{t.services.note} {t.book.support}</p>
           <BookLink href={bookHref} newTabLabel={t.book.newTab}>{t.book.primary}</BookLink>
-          <p className="text-[0.9rem] text-cream/75">{t.book.support}</p>
         </div>
       </div>
     </section>

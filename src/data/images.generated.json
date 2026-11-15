@@ -113,15 +113,6 @@
       1022
     ]
   },
-  "producto-pomada-mate": {
-    "width": 902,
-    "height": 1124,
-    "widths": [
-      480,
-      768,
-      902
-    ]
-  },
   "cera-antes": {
     "width": 800,
     "height": 800,
@@ -156,30 +147,6 @@
       484
     ]
   },
-  "galeria-03": {
-    "width": 484,
-    "height": 744,
-    "widths": [
-      480,
-      484
-    ]
-  },
-  "galeria-04": {
-    "width": 484,
-    "height": 744,
-    "widths": [
-      480,
-      484
-    ]
-  },
-  "galeria-05": {
-    "width": 484,
-    "height": 744,
-    "widths": [
-      480,
-      484
-    ]
-  },
   "galeria-06": {
     "width": 462,
     "height": 717,
@@ -195,13 +162,6 @@
     ]
   },
   "galeria-08": {
-    "width": 462,
-    "height": 717,
-    "widths": [
-      462
-    ]
-  },
-  "galeria-09": {
     "width": 462,
     "height": 717,
     "widths": [

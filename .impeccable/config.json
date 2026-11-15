@@ -47,6 +47,69 @@
         ],
         "createdAt": "2026-11-15T04:29:25.544Z",
         "reason": "Claude: <Img> is a component that builds src/srcSet from the generated image manifest; the static scan sees no src attribute"
+      },
+      {
+        "rule": "overused-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-11-15T04:38:34.839Z",
+        "reason": "Claude: throwaway decision-page skeleton sketch (gitignored, never shipped); system fonts are placeholders"
+      },
+      {
+        "rule": "italic-serif-display",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-11-15T04:38:37.892Z",
+        "reason": "Claude: throwaway decision-page skeleton sketch (gitignored, never shipped); system fonts are placeholders"
+      },
+      {
+        "rule": "overused-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-11-15T04:38:40.287Z",
+        "reason": "Claude: throwaway decision-page skeleton sketch (gitignored, never shipped); system fonts are placeholders"
+      },
+      {
+        "rule": "italic-serif-display",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-11-15T04:38:45.252Z",
+        "reason": "Claude: throwaway decision-page skeleton sketch (gitignored, never shipped); system fonts are placeholders"
+      },
+      {
+        "rule": "overused-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-11-15T04:38:47.419Z",
+        "reason": "Claude: throwaway decision-page skeleton sketch (gitignored, never shipped); system fonts are placeholders"
+      },
+      {
+        "rule": "italic-serif-display",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-11-15T04:38:49.076Z",
+        "reason": "Claude: throwaway decision-page skeleton sketch (gitignored, never shipped); system fonts are placeholders"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/components/PhotoBand.tsx"
+        ],
+        "createdAt": "2026-11-15T04:44:32.435Z",
+        "reason": "Claude: <Img> is a component that builds src/srcSet from the generated image manifest; the static scan sees no src attribute"
       }
     ]
   }

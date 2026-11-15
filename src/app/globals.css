@@ -108,6 +108,8 @@
     box-shadow: 0 6px 18px -8px rgb(0 0 0 / 0.7);
   }
   .btn-gold:hover { background: var(--color-gold-hi); box-shadow: 0 12px 26px -10px rgb(0 0 0 / 0.8); }
+  .btn-cream { background: var(--color-cream); color: var(--color-ink); }
+  .btn-cream:hover { background: #fffaf0; }
   .btn-line {
     border: 1px solid rgb(243 237 225 / 0.55);
     color: var(--color-cream);
@@ -145,16 +147,17 @@
 
 /* Hero intro: the one authored moment */
 @keyframes rule-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+/* Hero text and logo start already visible (LCP-safe): motion, not a fade-from-nothing */
 @keyframes logo-resolve {
-  from { opacity: 0; filter: blur(14px); transform: scale(1.03); }
-  to { opacity: 1; filter: blur(0); transform: none; }
+  from { filter: blur(10px); transform: scale(1.03); }
+  to { filter: blur(0); transform: none; }
 }
-@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes rise { from { opacity: 0.6; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 @keyframes hero-pan { from { transform: scale(1.08); } to { transform: scale(1); } }
 
 .hero-logo { animation: logo-resolve 1400ms var(--ease-out-expo) both; }
 .hero-rule { transform-origin: center; animation: rule-draw 1100ms 350ms var(--ease-out-expo) both; }
-.hero-rise { animation: rise 900ms var(--ease-out-expo) both; animation-delay: calc(700ms + var(--i, 0) * 110ms); }
+.hero-rise { animation: rise 900ms var(--ease-out-expo) both; animation-delay: calc(250ms + var(--i, 0) * 90ms); }
 .hero-img { animation: hero-pan 2600ms var(--ease-out-expo) both; }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import type { Dict } from '@/i18n/es';
 import { PRODUCTS, PRODUCT_CATEGORIES, type ProductCategory } from '@/data/products';
 import { whatsappUrl, type Lang } from '@/data/business';
@@ -17,7 +17,9 @@ export function Products({ t, lang, children }: { t: Dict; lang: Lang; children?
 
   const categories = useMemo(() => [...new Set(PRODUCTS.map((p) => p.category))], []);
   const visible = PRODUCTS.filter((p) => filter === 'all' || p.category === filter);
-  const items = visible.map((p) => ({ name: p.image, alt: p.imageAlt[lang], caption: `${p.brand} ${p.name}` }));
+  // Only products with a photo go to the lightbox.
+  const withImage = visible.filter((p) => p.image);
+  const items = withImage.map((p) => ({ name: p.image!, alt: p.imageAlt?.[lang] ?? '', caption: `${p.brand} ${p.name}` }));
 
   return (
     <section id="productos" className="section bg-ink-2" aria-labelledby="productos-title">
@@ -32,7 +34,7 @@ export function Products({ t, lang, children }: { t: Dict; lang: Lang; children?
                 type="button"
                 aria-pressed={filter === c}
                 onClick={() => setFilter(c)}
-                className={`btn btn-sm ${filter === c ? 'btn-gold' : 'btn-line'}`}
+                className={`btn btn-sm ${filter === c ? 'btn-cream' : 'btn-line'}`}
               >
                 {c === 'all' ? t.products.all : PRODUCT_CATEGORIES[c][lang]}
               </button>
@@ -43,24 +45,34 @@ export function Products({ t, lang, children }: { t: Dict; lang: Lang; children?
         <ul className="mx-auto mt-14 grid max-w-5xl gap-12 md:grid-cols-2 md:gap-10">
           {visible.map((p, i) => (
             <li key={p.id} className="reveal flex flex-col" style={{ '--i': i } as React.CSSProperties}>
+              {p.image ? (
               <button
                 type="button"
-                onClick={() => setIndex(i)}
+                onClick={() => setIndex(withImage.indexOf(p))}
                 className="group frame block aspect-[4/5] w-full"
               >
-                <motion.div layoutId={reduce ? undefined : `productos-${p.image}`} className="size-full">
+                <m.div layoutId={reduce ? undefined : `productos-${p.image}`} className="size-full">
                   <Img
                     name={p.image}
                     alt=""
                     sizes="(min-width: 768px) 460px, 92vw"
                     className="size-full object-cover transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.04]"
                   />
-                </motion.div>
+                </m.div>
                 <span className="absolute bottom-4 right-4 z-10 inline-flex size-11 items-center justify-center rounded-full bg-ink/75 text-xl text-cream">
                   <Zoom />
                 </span>
                 <span className="sr-only">{t.products.enlarge} {p.brand} {p.name}</span>
               </button>
+              ) : (
+                // Typographic label panel until a clean product photo exists
+                <div className="frame flex aspect-[16/9] w-full flex-col items-center justify-center gap-4 bg-ink-3 px-6 text-center md:aspect-[4/5] md:gap-5" aria-hidden>
+                  <span className="font-display text-6xl tracking-[0.12em] text-gold">{p.brand}</span>
+                  <span className="h-px w-16 bg-gold/60" />
+                  <span className="font-display text-2xl uppercase tracking-[0.18em] text-cream">{p.name}</span>
+                  {p.size ? <span className="text-[0.85rem] uppercase tracking-[0.2em] text-muted">{p.size}</span> : null}
+                </div>
+              )}
 
               <div className="mt-6 flex items-baseline">
                 <h3 className="font-display text-2xl uppercase tracking-[0.06em]">

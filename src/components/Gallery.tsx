@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import type { Dict } from '@/i18n/es';
 import { GALLERY } from '@/data/gallery';
 import { BUSINESS, type Lang } from '@/data/business';
@@ -20,22 +20,22 @@ export function Gallery({ t, lang }: { t: Dict; lang: Lang }) {
       <div className="wrap">
         <SectionHead id="galeria-title" title={t.gallery.title} intro={t.gallery.intro} />
 
-        <ul className="mt-14 grid grid-cols-3 gap-1.5 sm:gap-2 md:grid-cols-4">
+        <ul className="mt-14 grid grid-cols-2 gap-2 md:grid-cols-4">
           {items.map((it, i) => (
             <li key={it.name} className="reveal" style={{ '--i': i % 4 } as React.CSSProperties}>
               <button
                 type="button"
                 onClick={() => setIndex(i)}
-                className="group relative block aspect-[3/4] w-full overflow-hidden bg-ink-2"
+                className="group relative block aspect-[2/3] w-full overflow-hidden bg-ink-2"
               >
-                <motion.div layoutId={reduce ? undefined : `galeria-${it.name}`} className="size-full">
+                <m.div layoutId={reduce ? undefined : `galeria-${it.name}`} className="size-full">
                   <Img
                     name={it.name}
                     alt=""
-                    sizes="(min-width: 768px) 280px, 33vw"
+                    sizes="(min-width: 768px) 280px, 50vw"
                     className="size-full object-cover transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.05]"
                   />
-                </motion.div>
+                </m.div>
                 <span className="absolute inset-0 flex items-center justify-center bg-ink/0 text-2xl text-cream opacity-0 transition-[opacity,background-color] duration-300 group-hover:bg-ink/35 group-hover:opacity-100 group-focus-visible:opacity-100">
                   <Zoom />
                 </span>
@@ -48,7 +48,7 @@ export function Gallery({ t, lang }: { t: Dict; lang: Lang }) {
               href={BUSINESS.instagram}
               target="_blank"
               rel="noopener"
-              className="group flex aspect-[3/4] w-full flex-col items-center justify-center gap-3 border border-gold/40 p-3 text-center no-underline transition-colors hover:border-gold hover:bg-ink-2"
+              className="group flex aspect-[2/3] w-full flex-col items-center justify-center gap-3 border border-gold/40 p-3 text-center no-underline transition-colors hover:border-gold hover:bg-ink-2"
             >
               <Instagram className="text-3xl text-gold-hi" />
               <span className="font-display text-[0.95rem] uppercase leading-snug tracking-[0.08em] text-cream sm:text-lg">{t.gallery.follow}</span>
