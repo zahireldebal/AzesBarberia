@@ -48,7 +48,7 @@ Para cambiar o agregar una foto:
 
 1. Copiá el original a la carpeta del proyecto.
 2. Agregá o editá su entrada en `JOBS` dentro de `scripts/process-images.mjs` (nombre, archivo, recorte; `retouch` quita el botón ▶ de Instagram).
-3. Corré `npm run images`.
+3. Corré `npm run images`. Opcional: con la variable `REALESRGAN_BIN` apuntando a `realesrgan-ncnn-vulkan.exe` (Real-ESRGAN) las fotos se reescalan con IA.
 4. Usá el nombre en el archivo de datos correspondiente (por ejemplo `products.ts`).
 5. Commiteá `public/img/` y `src/data/images.generated.json`.
 

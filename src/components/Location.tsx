@@ -15,14 +15,14 @@ export function Location({ t }: { t: Dict }) {
 
         {/* Photo mosaic: three portrait views of the floor and the mezzanine */}
         <div className="mt-14 grid grid-cols-2 gap-2 md:grid-cols-3">
-          <div className="reveal frame col-span-2 aspect-[4/3] md:col-span-1 md:aspect-[4/5]">
-            <Img name="local-sillones" alt={t.location.photosAlt.sillones} sizes="(min-width: 768px) 33vw, 100vw" className="size-full object-cover" />
+          <div className="reveal frame group col-span-2 aspect-[4/3] md:col-span-1 md:aspect-[4/5]">
+            <Img name="local-sillones" alt={t.location.photosAlt.sillones} sizes="(min-width: 768px) 33vw, 100vw" className="size-full object-cover transition-transform duration-[1200ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.06]" />
           </div>
-          <div className="reveal frame aspect-[4/5]" style={{ '--i': 1 } as React.CSSProperties}>
-            <Img name="local-espejo" alt={t.location.photosAlt.espejo} sizes="(min-width: 768px) 33vw, 50vw" className="size-full object-cover" />
+          <div className="reveal frame group aspect-[4/5]" style={{ '--i': 1 } as React.CSSProperties}>
+            <Img name="local-espejo" alt={t.location.photosAlt.espejo} sizes="(min-width: 768px) 33vw, 50vw" className="size-full object-cover transition-transform duration-[1200ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.06]" />
           </div>
-          <div className="reveal frame aspect-[4/5]" style={{ '--i': 2 } as React.CSSProperties}>
-            <Img name="local-entrepiso" alt={t.location.photosAlt.entrepiso} sizes="(min-width: 768px) 33vw, 50vw" className="size-full object-cover" />
+          <div className="reveal frame group aspect-[4/5]" style={{ '--i': 2 } as React.CSSProperties}>
+            <Img name="local-entrepiso" alt={t.location.photosAlt.entrepiso} sizes="(min-width: 768px) 33vw, 50vw" className="size-full object-cover transition-transform duration-[1200ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.06]" />
           </div>
         </div>
 

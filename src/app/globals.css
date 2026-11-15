@@ -20,6 +20,7 @@
 
 @layer base {
   :root {
+    interpolate-size: allow-keywords;
     color-scheme: dark;
     scroll-padding-top: 5rem;
   }
@@ -99,6 +100,9 @@
     -webkit-user-select: none;
     user-select: none;
     touch-action: manipulation;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
   }
   .btn:hover { transform: translateY(-2px); }
   .btn:active { transform: scale(0.97); transition-duration: 90ms; }
@@ -107,14 +111,35 @@
     color: var(--color-ink);
     box-shadow: 0 6px 18px -8px rgb(0 0 0 / 0.7);
   }
-  .btn-gold:hover { background: var(--color-gold-hi); box-shadow: 0 12px 26px -10px rgb(0 0 0 / 0.8); }
+  .btn-gold:hover { background: var(--color-gold-hi); box-shadow: 0 12px 26px -10px rgb(0 0 0 / 0.8), 0 0 0 1px rgb(201 164 108 / 0.4); }
+  /* a light sweep crosses the gold button on hover */
+  .btn-gold::after {
+    content: '';
+    position: absolute;
+    inset: -2px auto -2px -60%;
+    width: 45%;
+    background: linear-gradient(100deg, transparent, rgb(255 250 235 / 0.55), transparent);
+    transform: skewX(-18deg);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .btn-gold:hover::after { animation: shine 900ms var(--ease-out-expo); }
   .btn-cream { background: var(--color-cream); color: var(--color-ink); }
   .btn-cream:hover { background: #fffaf0; }
   .btn-line {
     border: 1px solid rgb(243 237 225 / 0.55);
     color: var(--color-cream);
   }
-  .btn-line:hover { border-color: var(--color-cream); background: rgb(243 237 225 / 0.06); }
+  /* outline buttons fill from the left on hover */
+  .btn-line {
+    background-image: linear-gradient(rgb(243 237 225 / 0.1), rgb(243 237 225 / 0.1));
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    transition: transform 220ms var(--ease-out-expo), background-size 420ms var(--ease-out-expo), border-color 220ms, color 220ms;
+  }
+  .btn-line:hover { border-color: var(--color-cream); background-size: 100% 100%; }
+  .btn svg { transition: transform 300ms var(--ease-out-expo); }
+  .btn:hover svg:last-child { transform: translate(2px, -2px); }
   .btn-sm { min-height: 2.75rem; padding: 0.55rem 1rem; font-size: 0.875rem; }
 
   /* Dotted leader between a name and a price (price-board rows) */
@@ -124,7 +149,59 @@
     margin-inline: 0.6rem;
     border-bottom: 1px dotted rgb(176 141 87 / 0.55);
     transform: translateY(-0.35em);
+    transition: border-color 300ms;
   }
+
+  /* Price-board row: the whole line lights up on hover */
+  .board-row { position: relative; }
+  .board-row::before {
+    content: '';
+    position: absolute;
+    inset: 0 -1rem;
+    background: radial-gradient(60% 120% at 0% 50%, rgb(176 141 87 / 0.1), transparent 70%);
+    opacity: 0;
+    transition: opacity 400ms var(--ease-out-expo);
+    pointer-events: none;
+  }
+  .board-row:hover::before { opacity: 1; }
+  .board-row h3 { transition: transform 400ms var(--ease-out-expo), color 300ms; }
+  .board-row:hover h3 { transform: translateX(6px); color: #fff; }
+  .board-row:hover .leader { border-bottom-style: solid; border-color: rgb(201 164 108 / 0.8); }
+
+  /* Nav link underline that grows from the centre */
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.45rem;
+    height: 1px;
+    background: var(--color-gold-hi);
+    transform: scaleX(0);
+    transition: transform 350ms var(--ease-out-expo);
+  }
+  .nav-link:hover::after, .nav-link:focus-visible::after { transform: scaleX(1); }
+
+  /* Cards that lift on hover (team, products) */
+  .lift { transition: transform 500ms var(--ease-out-expo); }
+  .lift:hover { transform: translateY(-6px); }
+  .lift .frame { transition: box-shadow 500ms var(--ease-out-expo); }
+  .lift:hover .frame { box-shadow: 0 24px 50px -24px rgb(0 0 0 / 0.95), 0 0 0 1px rgb(201 164 108 / 0.25); }
+  .lift:hover .frame::after { border-color: rgb(201 164 108 / 0.85); }
+
+  /* Gold light that follows the pointer over a photo (vars set in Shell.tsx) */
+  .spot-glow {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgb(201 164 108 / 0.35), transparent 65%);
+    mix-blend-mode: soft-light;
+    opacity: 0;
+    transition: opacity 400ms;
+    pointer-events: none;
+  }
+  .spot:hover .spot-glow { opacity: 1; }
 
   /* Thin gold-inset photo frame */
   .frame { position: relative; overflow: hidden; background: var(--color-ink-2); }
@@ -135,6 +212,52 @@
     border: 1px solid rgb(201 164 108 / 0.45);
     pointer-events: none;
   }
+
+  /* Loading: a gold shimmer runs across the frame until its photo arrives */
+  .frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 30%, rgb(201 164 108 / 0.12) 50%, transparent 70%) 0 0 / 220% 100%;
+    animation: shimmer 1.4s linear infinite;
+  }
+  .frame:has(img.is-loaded)::before { animation: none; opacity: 0; }
+  .frame::after { transition: border-color 400ms; }
+  /* Photos resolve from a blur once loaded (only with JS; see Shell.tsx) */
+  html.js img.fx-img { transition: filter 900ms var(--ease-out-expo), opacity 700ms var(--ease-out-expo), transform 1200ms var(--ease-out-expo); }
+  html.js img.fx-img:not(.is-loaded) { filter: blur(18px) saturate(0.6); opacity: 0.4; transform: scale(1.04); }
+
+  /* Suit rule lines draw from the centre when their section reveals */
+  .suit-line { transform: scaleX(1); transition: transform 1100ms 200ms var(--ease-out-expo); }
+  .suit-line-l { transform-origin: right; }
+  .suit-line-r { transform-origin: left; }
+  html.js .reveal:not(.is-in) .suit-line { transform: scaleX(0); }
+
+  /* FAQ answers open and close smoothly (progressive: Chromium 131+) */
+  details.faq::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size 450ms var(--ease-out-expo), content-visibility 450ms allow-discrete;
+  }
+  details.faq[open]::details-content { block-size: auto; }
+  details.faq p { opacity: 0; transform: translateY(-6px); transition: opacity 400ms 80ms, transform 450ms 80ms var(--ease-out-expo); }
+  details.faq[open] p { opacity: 1; transform: none; }
+  details.faq summary { transition: color 250ms; }
+  details.faq summary:hover { color: var(--color-gold-hi); }
+
+  /* Top bar: page-load progress, then scroll progress */
+  .progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 2px;
+    z-index: 90;
+    pointer-events: none;
+    transform-origin: left;
+    background: linear-gradient(90deg, var(--color-gold-lo), var(--color-gold-hi));
+    box-shadow: 0 0 10px rgb(201 164 108 / 0.6);
+  }
+  .progress-load { animation: load-bar 1.3s var(--ease-out-expo) forwards; }
+  .progress-scroll { transform: scaleX(var(--scroll, 0)); opacity: 0.85; }
 
   /* Scroll reveal: content is visible by default; only hidden once JS is
      confirmed (html.js) and only until it enters the viewport. */
@@ -153,12 +276,22 @@
   to { filter: blur(0); transform: none; }
 }
 @keyframes rise { from { opacity: 0.6; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes shine { from { left: -60%; } to { left: 130%; } }
+@keyframes shimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+@keyframes load-bar {
+  0% { transform: scaleX(0); opacity: 1; }
+  70% { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(1); opacity: 0; }
+}
 @keyframes hero-pan { from { transform: scale(1.08); } to { transform: scale(1); } }
 
 .hero-logo { animation: logo-resolve 1400ms var(--ease-out-expo) both; }
 .hero-rule { transform-origin: center; animation: rule-draw 1100ms 350ms var(--ease-out-expo) both; }
 .hero-rise { animation: rise 900ms var(--ease-out-expo) both; animation-delay: calc(250ms + var(--i, 0) * 90ms); }
 .hero-img { animation: hero-pan 2600ms var(--ease-out-expo) both; }
+/* Hero parallax: --sy (scroll px, hero range only) is set in Shell.tsx */
+.hero-parallax { transform: translate3d(0, calc(var(--sy, 0) * 0.25px), 0); }
+.hero-fade { opacity: calc(1 - var(--sy, 0) / 700); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -168,4 +301,10 @@
     transition-delay: 0ms !important;
   }
   html.js .reveal:not(.is-in) { opacity: 1; transform: none; }
+  html.js .reveal:not(.is-in) .suit-line { transform: none; }
+  html.js img.fx-img:not(.is-loaded) { filter: none; opacity: 1; transform: none; }
+  .hero-parallax { transform: none; }
+  .hero-fade { opacity: 1; }
+  .frame::before { animation: none; }
+  .spot-glow { display: none; }
 }

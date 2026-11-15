@@ -1,12 +1,13 @@
 {
   "fachada": {
-    "width": 1428,
-    "height": 1590,
+    "width": 1785,
+    "height": 1988,
     "widths": [
       480,
       768,
       1080,
-      1428
+      1440,
+      1785
     ]
   },
   "local-sillones": {
@@ -114,26 +115,6 @@
       480,
       768,
       1000
-    ]
-  },
-  "pomada-antes": {
-    "width": 1200,
-    "height": 800,
-    "widths": [
-      480,
-      768,
-      1080,
-      1200
-    ]
-  },
-  "pomada-despues": {
-    "width": 1200,
-    "height": 800,
-    "widths": [
-      480,
-      768,
-      1080,
-      1200
     ]
   },
   "logo-light": {

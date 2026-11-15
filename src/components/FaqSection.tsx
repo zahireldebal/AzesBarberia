@@ -12,7 +12,7 @@ export function FaqSection({ t, lang }: { t: Dict; lang: Lang }) {
         <SectionHead id="preguntas-title" title={t.faq.title} />
         <div className="reveal mx-auto mt-12 max-w-3xl border-t border-line">
           {FAQ.map((f) => (
-            <details key={f.q.es} className="group border-b border-line">
+            <details key={f.q.es} className="faq group border-b border-line">
               <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-semibold marker:hidden [&::-webkit-details-marker]:hidden">
                 {f.q[lang]}
                 <ChevronDown className="shrink-0 text-xl text-gold transition-transform duration-300 group-open:rotate-180" />

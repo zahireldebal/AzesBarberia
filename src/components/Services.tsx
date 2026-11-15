@@ -18,7 +18,7 @@ export function Services({ t, lang, bookHref }: Props) {
 
         <ol className="mx-auto mt-14 max-w-3xl border-y border-line">
           {SERVICES.map((s, i) => (
-            <li key={s.id} className="reveal border-b border-line py-7 last:border-b-0 sm:py-8" style={{ '--i': i } as React.CSSProperties}>
+            <li key={s.id} className="reveal board-row border-b border-line py-7 last:border-b-0 sm:py-8" style={{ '--i': i } as React.CSSProperties}>
               <div className="flex items-baseline">
                 <h3 className="font-display text-[1.25rem] uppercase tracking-[0.05em] sm:text-2xl sm:tracking-[0.06em]">{s.name[lang]}</h3>
                 <span className="leader" aria-hidden />

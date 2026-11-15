@@ -82,7 +82,7 @@ export function Header({ t, bookHref, homeHref, altLangHref }: Props) {
             <ul className="flex items-center gap-7 text-[0.8rem] font-semibold uppercase tracking-[0.14em]">
               {links.map(([href, label]) => (
                 <li key={href}>
-                  <a href={href} className="py-3 text-cream/85 no-underline transition-colors hover:text-gold-hi">{label}</a>
+                  <a href={href} className="nav-link py-3 text-cream/85 no-underline transition-colors hover:text-gold-hi">{label}</a>
                 </li>
               ))}
             </ul>

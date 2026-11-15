@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef } from 'react';
 import { AnimatePresence, m, useReducedMotion, type PanInfo } from 'framer-motion';
-import { imageEntry, srcSet, largestSrc } from './Img';
+import { imageEntry, srcSet, largestSrc } from '@/lib/images';
 import { ChevronLeft, ChevronRight, Close } from './Icons';
 
 export type LightboxItem = { name: string; alt: string; caption?: string };

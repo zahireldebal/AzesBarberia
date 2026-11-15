@@ -1,7 +1,7 @@
 import type { Dict } from '@/i18n/es';
 import { BUSINESS } from '@/data/business';
 import { SERVICES } from '@/data/services';
-import { srcSet, imageEntry } from './Img';
+import { srcSet, imageEntry } from '@/lib/images';
 import { BookLink } from './BookLink';
 import { Clock, Pin, Star } from './Icons';
 
@@ -14,7 +14,7 @@ export function Hero({ t, bookHref }: Props) {
   return (
     <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden" aria-labelledby="hero-title">
       {/* The façade (hero.png) on every screen size */}
-      <picture className="absolute inset-0 -z-20">
+      <picture className="hero-parallax absolute inset-0 -z-20">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/img/fachada-768.webp"
@@ -33,7 +33,7 @@ export function Hero({ t, bookHref }: Props) {
         className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(14_14_15/0.55)_0%,rgb(14_14_15/0.35)_30%,rgb(14_14_15/0.82)_62%,#0e0e0f_100%)] md:bg-[radial-gradient(ellipse_at_50%_42%,rgb(14_14_15/0.5),rgb(14_14_15/0.72)_75%),linear-gradient(180deg,transparent_60%,#0e0e0f)]"
       />
 
-      <div className="wrap flex flex-1 flex-col items-center justify-end pb-28 pt-28 text-center sm:pb-20 md:justify-center md:pb-16">
+      <div className="hero-fade wrap flex flex-1 flex-col items-center justify-end pb-28 pt-28 text-center sm:pb-20 md:justify-center md:pb-16">
         <h1 id="hero-title" className="w-[min(78vw,26rem)] md:w-[30rem]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

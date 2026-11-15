@@ -19,10 +19,11 @@ export function Team({ t, lang }: Props) {
           {TEAM.map((b, i) => (
             <li
               key={b.id}
-              className="reveal group flex w-[calc(50%-0.5rem)] flex-col sm:w-[calc(33.333%-0.7rem)] lg:w-auto lg:flex-1"
+              className="reveal lift group flex w-[calc(50%-0.5rem)] flex-col sm:w-[calc(33.333%-0.7rem)] lg:w-auto lg:flex-1"
               style={{ '--i': i } as React.CSSProperties}
             >
-              <div className="frame aspect-[4/5]">
+              <div className="frame spot aspect-[4/5]">
+                <span className="spot-glow" aria-hidden />
                 <Img
                   name={b.image}
                   alt={`${t.team.photoAlt} ${b.name}`}

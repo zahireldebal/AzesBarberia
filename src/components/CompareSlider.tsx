@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
-import { Img, imageEntry } from './Img';
+import { Img } from './Img';
+import { imageEntry } from '@/lib/images';
 
 type Props = {
   before: string;

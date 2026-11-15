@@ -1,29 +1,10 @@
-import manifest from '@/data/images.generated.json';
+'use client';
 
-type Entry = { width: number; height: number; widths: number[] };
-const IMAGES = manifest as Record<string, Entry>;
+import { useEffect, useRef, useState } from 'react';
+import { imageEntry, srcSet, fallbackSrc } from '@/lib/images';
 
-export function imageEntry(name: string): Entry {
-  const e = IMAGES[name];
-  if (!e) throw new Error(`Image "${name}" missing: run npm run images`);
-  return e;
-}
-
-export function srcSet(name: string): string {
-  return imageEntry(name).widths.map((w) => `/img/${name}-${w}.webp ${w}w`).join(', ');
-}
-
-export function largestSrc(name: string): string {
-  const { widths } = imageEntry(name);
-  return `/img/${name}-${widths[widths.length - 1]}.webp`;
-}
-
-/** Picks a middle width as the fallback src. */
-function fallbackSrc(name: string): string {
-  const { widths } = imageEntry(name);
-  const w = widths.find((x) => x >= 768) ?? widths[widths.length - 1];
-  return `/img/${name}-${w}.webp`;
-}
+// Helpers re-exported for client components; server components import them from '@/lib/images'.
+export { imageEntry, srcSet, largestSrc } from '@/lib/images';
 
 type Props = {
   name: string;
@@ -34,22 +15,38 @@ type Props = {
   style?: React.CSSProperties;
 };
 
-export function Img({ name, alt, sizes, className, priority, style }: Props) {
+/**
+ * Responsive WebP image that resolves from a blur once loaded (`fx-img`).
+ * Loaded state lives in React so re-renders never put the blur back; the
+ * inline script in Shell.tsx marks images that finish before hydration.
+ */
+export function Img({ name, alt, sizes, className = '', priority, style }: Props) {
   const { width, height } = imageEntry(name);
+  const ref = useRef<HTMLImageElement>(null);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const img = ref.current;
+    if (img && img.complete && img.naturalWidth) setLoaded(true);
+  }, []);
+
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
+      ref={ref}
       src={fallbackSrc(name)}
       srcSet={srcSet(name)}
       sizes={sizes}
       width={width}
       height={height}
       alt={alt}
-      className={className}
+      className={`fx-img ${loaded ? 'is-loaded' : ''} ${className}`}
       style={style}
       loading={priority ? 'eager' : 'lazy'}
       decoding={priority ? 'sync' : 'async'}
       fetchPriority={priority ? 'high' : undefined}
+      onLoad={() => setLoaded(true)}
+      onError={() => setLoaded(true)}
     />
   );
 }

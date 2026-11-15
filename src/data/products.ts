@@ -83,15 +83,5 @@ export const PRODUCTS: Product[] = [
       es: ['Textura y movimiento', 'Acabado mate natural', 'Sin brillo y sin grasa', 'Fijación fuerte todo el día'],
       en: ['Texture and movement', 'Natural matte finish', 'No shine, no grease', 'Strong all-day hold'],
     },
-    showcase: {
-      before: 'pomada-antes',
-      after: 'pomada-despues',
-      beforeAlt: { es: 'Pelo mojado y sin forma, antes de peinar', en: 'Wet, shapeless hair before styling' },
-      afterAlt: { es: 'El pelo peinado con pomada mate: textura, movimiento y sin brillo', en: 'The hair styled with matte pomade: texture, movement and no shine' },
-      lead: {
-        es: 'Textura y movimiento con fijación fuerte y acabado natural, sin brillo ni grasa. Deslizá la barra para comparar.',
-        en: 'Texture and movement with strong hold and a natural finish, no shine or grease. Slide the bar to compare.',
-      },
-    },
   },
 ];

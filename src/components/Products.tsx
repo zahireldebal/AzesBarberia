@@ -44,13 +44,14 @@ export function Products({ t, lang }: { t: Dict; lang: Lang }) {
 
         <ul className="mx-auto mt-14 grid max-w-5xl gap-12 md:grid-cols-2 md:gap-10">
           {visible.map((p, i) => (
-            <li key={p.id} className="reveal flex flex-col" style={{ '--i': i } as React.CSSProperties}>
+            <li key={p.id} className="reveal lift flex flex-col" style={{ '--i': i } as React.CSSProperties}>
               {p.image ? (
               <button
                 type="button"
                 onClick={() => setIndex(withImage.indexOf(p))}
-                className="group frame block aspect-[4/5] w-full"
+                className="group frame spot block aspect-[4/5] w-full"
               >
+                <span className="spot-glow" aria-hidden />
                 <m.div layoutId={reduce ? undefined : `productos-${p.image}`} className="size-full">
                   <Img
                     name={p.image}
@@ -59,7 +60,7 @@ export function Products({ t, lang }: { t: Dict; lang: Lang }) {
                     className="size-full object-cover transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.04]"
                   />
                 </m.div>
-                <span className="absolute bottom-4 right-4 z-10 inline-flex size-11 items-center justify-center rounded-full bg-ink/75 text-xl text-cream">
+                <span className="absolute bottom-4 right-4 z-10 inline-flex size-11 items-center justify-center rounded-full bg-ink/75 text-xl text-cream transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-110 group-hover:rotate-90">
                   <Zoom />
                 </span>
                 <span className="sr-only">{t.products.enlarge} {p.brand} {p.name}</span>

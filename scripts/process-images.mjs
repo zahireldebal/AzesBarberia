@@ -8,7 +8,18 @@
 import sharp from 'sharp';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { removePlayButton } from './retouch.mjs';
+
+/**
+ * Optional AI upscaler. If REALESRGAN_BIN points to a realesrgan-ncnn-vulkan
+ * executable (https://github.com/xinntao/Real-ESRGAN/releases), every photo is
+ * first upscaled 4x with the realesrgan-x4plus model, which rebuilds fine detail.
+ * Without it the pipeline falls back to the classic enhancement chain below.
+ */
+const ESRGAN = process.env.REALESRGAN_BIN && existsSync(process.env.REALESRGAN_BIN) ? process.env.REALESRGAN_BIN : null;
+const CACHE = path.join(path.resolve(import.meta.dirname, '..'), 'assets-src', '.upscale-cache');
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'public', 'img');
@@ -22,11 +33,12 @@ const BA = (...p) => src('ANIMACION SIMULADO PRODUCTOS CAPILARES', ...p);
 /**
  * name, file, crop [left, top, width, height], scale or size [w, h],
  * retouch: Instagram play badge to remove before cropping ({cx, cy, r, grain}),
- * hd: two-step upscale with sharpening between steps (for small sources).
+ * Every photo goes through enhance(): AI 4x (optional) or a two-step Lanczos
+ * upscale, a 35% blend of local contrast (CLAHE) and a final sharpen.
  */
 const JOBS = [
   // Local / hero (Google Maps captures)
-  { name: 'fachada', file: src('hero.png'), crop: [0, 0, 714, 795], scale: 2 },
+  { name: 'fachada', file: src('hero.png'), crop: [0, 0, 714, 795], scale: 2.5 },
   { name: 'local-sillones', file: src('SitioFisico', '1.png'), crop: [0, 0, 727, 858], scale: 2 },
   { name: 'local-espejo', file: src('SitioFisico', '3.png'), crop: [0, 0, 716, 852], scale: 2 },
   { name: 'local-entrepiso', file: src('SitioFisico', '5.png'), crop: [0, 0, 716, 858], scale: 2 },
@@ -39,16 +51,12 @@ const JOBS = [
   // Products (BRB story screenshots)
   { name: 'producto-cera-en-polvo', file: src('Productos', 'ceraenpolvo1.png'), crop: [697, 100, 511, 600], scale: 2 },
   // Pomada Mate (imagenmate.png, a paused BRB reel): play badge removed, BRB sticker cropped out.
-  { name: 'producto-pomada-mate', file: src('Productos', 'imagenmate.png'), retouch: { cx: 255, cy: 461, r: 36, grain: false }, crop: [15, 190, 430, 458], scale: 2, hd: true },
+  { name: 'producto-pomada-mate', file: src('Productos', 'imagenmate.png'), retouch: { cx: 255, cy: 461, r: 36, grain: false }, crop: [15, 190, 430, 458], scale: 2 },
 
   // Before / after pairs (BRB reels, illustrative). Each pair shares framing,
   // head size and position so the comparison slider lines up.
-  { name: 'cera-antes', file: BA('antes.png'), crop: [70, 48, 315, 315], size: [1000, 1000], hd: true },
-  { name: 'cera-despues', file: BA('despues.png'), crop: [40, 75, 340, 340], size: [1000, 1000], hd: true },
-  // Pomada mate: the "antes" is cropped just above the burned-in caption (the hair
-  // itself is clean); the "después" play badge sits on the neck and is removed.
-  { name: 'pomada-antes', file: BA('antesceramate.png'), crop: [150, 44, 240, 160], size: [1200, 800], hd: true },
-  { name: 'pomada-despues', file: BA('despuesceramate.png'), retouch: { cx: 259, cy: 450, r: 36 }, crop: [37, 225, 336, 224], size: [1200, 800], hd: true },
+  { name: 'cera-antes', file: BA('antes.png'), crop: [70, 48, 315, 315], size: [1000, 1000] },
+  { name: 'cera-despues', file: BA('despues.png'), crop: [40, 75, 340, 340], size: [1000, 1000] },
 
 ];
 
@@ -65,33 +73,44 @@ async function processJob(job) {
   }
   const meta = job.crop ? { width: job.crop[2], height: job.crop[3] } : await sharp(job.file).metadata();
   const [W, H] = job.size ?? [Math.round(meta.width * job.scale), Math.round(meta.height * job.scale)];
-  let master;
-  if (job.hd) {
-    // two smaller steps keep edges crisper than one big jump on low-res sources
-    const mid = await img.removeAlpha()
-      .resize(Math.round((W + (meta.width)) / 2), Math.round((H + (meta.height)) / 2), { kernel: 'lanczos3', fit: 'cover' })
-      .sharpen({ sigma: 0.7, m1: 0.5, m2: 1 })
-      .png()
-      .toBuffer();
-    master = await sharp(mid).resize(W, H, { kernel: 'lanczos3', fit: 'cover' })
-      .sharpen({ sigma: 0.9, m1: 0.7, m2: 1.4 })
-      .modulate({ saturation: 1.04 })
-      .png()
-      .toBuffer();
-  } else {
-    master = await img
-      .removeAlpha()
-      .resize(W, H, { kernel: 'lanczos3', fit: 'cover' })
-      .sharpen({ sigma: 0.8, m1: 0.6, m2: 1.2 })
-      .png()
-      .toBuffer();
-  }
+  const cropped = await img.removeAlpha().png().toBuffer();
+  const master = await enhance(job.name, cropped, meta, W, H);
 
   const widths = WIDTHS.filter((w) => w < W).concat(W);
   await Promise.all(widths.map((w) =>
-    sharp(master).resize(w).webp({ quality: 80, effort: 5 }).toFile(path.join(OUT, `${job.name}-${w}.webp`)),
+    sharp(master).resize(w, null, { kernel: 'lanczos3' }).webp({ quality: 84, effort: 6, smartSubsample: true }).toFile(path.join(OUT, `${job.name}-${w}.webp`)),
   ));
   return [job.name, { width: W, height: H, widths }];
+}
+
+/** Upscale + local contrast + sharpen. Returns a PNG buffer of exactly W x H. */
+async function enhance(name, input, meta, W, H) {
+  let base = input;
+  if (ESRGAN) {
+    await fs.mkdir(CACHE, { recursive: true });
+    const inFile = path.join(CACHE, `${name}-in.png`);
+    const outFile = path.join(CACHE, `${name}-x4.png`);
+    await fs.writeFile(inFile, input);
+    execFileSync(ESRGAN, ['-i', inFile, '-o', outFile, '-n', 'realesrgan-x4plus'], { stdio: 'ignore' });
+    base = await fs.readFile(outFile);
+    const up = await sharp(base).resize(W, H, { kernel: 'lanczos3', fit: 'cover' }).png().toBuffer();
+    return sharp(up).sharpen({ sigma: 0.5, m1: 0.4, m2: 0.8 }).png().toBuffer();
+  }
+  // 1. two smaller Lanczos steps keep edges crisper than one big jump
+  const mid = await sharp(base)
+    .resize(Math.round((W + meta.width) / 2), Math.round((H + meta.height) / 2), { kernel: 'lanczos3', fit: 'cover' })
+    .sharpen({ sigma: 0.7, m1: 0.5, m2: 1 })
+    .png().toBuffer();
+  const up = await sharp(mid).resize(W, H, { kernel: 'lanczos3', fit: 'cover' }).png().toBuffer();
+  // 2. local contrast (CLAHE) blended at 35% so hair and textures read without looking processed
+  const tile = Math.max(8, Math.round(Math.min(W, H) / 10));
+  const local = await sharp(up).clahe({ width: tile, height: tile, maxSlope: 2 }).ensureAlpha(0.35).png().toBuffer();
+  // 3. final sharpen tuned for upscaled photos, a touch of saturation
+  return sharp(up)
+    .composite([{ input: local, blend: 'over' }])
+    .sharpen({ sigma: 1, m1: 0.8, m2: 1.6, x1: 2, y2: 12, y3: 20 })
+    .modulate({ saturation: 1.05 })
+    .png().toBuffer();
 }
 
 /** White background -> alpha. Neutral ink is recoloured to `ink`; the suit red is kept. */

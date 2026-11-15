@@ -22,11 +22,11 @@ export function Suit({ name, className }: { name: SuitName; className?: string }
 export function SuitRule({ className = '' }: { className?: string }) {
   return (
     <div className={`flex items-center gap-4 text-gold ${className}`} aria-hidden>
-      <span className="h-px flex-1 bg-gradient-to-r from-transparent to-gold/60" />
+      <span className="suit-line suit-line-l h-px flex-1 bg-gradient-to-r from-transparent to-gold/60" />
       <span className="flex gap-2 text-[0.8rem] text-cream">
         {(['spade', 'heart', 'club', 'diamond'] as const).map((s) => <Suit key={s} name={s} />)}
       </span>
-      <span className="h-px flex-1 bg-gradient-to-l from-transparent to-gold/60" />
+      <span className="suit-line suit-line-r h-px flex-1 bg-gradient-to-l from-transparent to-gold/60" />
     </div>
   );
 }
