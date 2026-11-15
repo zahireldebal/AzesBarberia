@@ -137,6 +137,15 @@
         ],
         "createdAt": "2026-11-15T04:58:38.829Z",
         "reason": "Claude: throwaway decision-page skeleton sketch (gitignored, never shipped); system fonts are placeholders"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/components/CompareSlider.tsx"
+        ],
+        "createdAt": "2026-11-15T15:49:12.670Z",
+        "reason": "Claude: <Img> is a component that builds src/srcSet from the generated image manifest; the static scan sees no src attribute"
       }
     ]
   }

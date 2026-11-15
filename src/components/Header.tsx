@@ -20,7 +20,6 @@ export function Header({ t, bookHref, homeHref, altLangHref }: Props) {
     ['#servicios', t.nav.services],
     ['#equipo', t.nav.team],
     ['#productos', t.nav.products],
-    ['#galeria', t.nav.gallery],
     ['#local', t.nav.location],
     ['#preguntas', t.nav.faq],
   ] as const;

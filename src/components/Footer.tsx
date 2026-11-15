@@ -9,7 +9,6 @@ export function Footer({ t, bookHref }: { t: Dict; bookHref: string }) {
     ['#servicios', t.nav.services],
     ['#equipo', t.nav.team],
     ['#productos', t.nav.products],
-    ['#galeria', t.nav.gallery],
     ['#local', t.nav.location],
     ['#preguntas', t.nav.faq],
   ] as const;

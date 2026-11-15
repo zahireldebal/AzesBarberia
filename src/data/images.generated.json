@@ -20,18 +20,6 @@
       1454
     ]
   },
-  "local-salon": {
-    "width": 2080,
-    "height": 1716,
-    "widths": [
-      480,
-      768,
-      1080,
-      1440,
-      1920,
-      2080
-    ]
-  },
   "local-espejo": {
     "width": 1432,
     "height": 1704,
@@ -40,18 +28,6 @@
       768,
       1080,
       1432
-    ]
-  },
-  "local-lounge": {
-    "width": 2100,
-    "height": 1716,
-    "widths": [
-      480,
-      768,
-      1080,
-      1440,
-      1920,
-      2100
     ]
   },
   "local-entrepiso": {
@@ -113,73 +89,51 @@
       1022
     ]
   },
-  "cera-antes": {
-    "width": 800,
-    "height": 800,
+  "producto-pomada-mate": {
+    "width": 860,
+    "height": 916,
     "widths": [
       480,
       768,
-      800
+      860
+    ]
+  },
+  "cera-antes": {
+    "width": 1000,
+    "height": 1000,
+    "widths": [
+      480,
+      768,
+      1000
     ]
   },
   "cera-despues": {
-    "width": 800,
+    "width": 1000,
+    "height": 1000,
+    "widths": [
+      480,
+      768,
+      1000
+    ]
+  },
+  "pomada-antes": {
+    "width": 1200,
     "height": 800,
     "widths": [
       480,
       768,
-      800
+      1080,
+      1200
     ]
   },
-  "galeria-01": {
-    "width": 484,
-    "height": 744,
+  "pomada-despues": {
+    "width": 1200,
+    "height": 800,
     "widths": [
       480,
-      484
-    ]
-  },
-  "galeria-02": {
-    "width": 484,
-    "height": 744,
-    "widths": [
-      480,
-      484
-    ]
-  },
-  "galeria-06": {
-    "width": 462,
-    "height": 717,
-    "widths": [
-      462
-    ]
-  },
-  "galeria-07": {
-    "width": 462,
-    "height": 717,
-    "widths": [
-      462
-    ]
-  },
-  "galeria-08": {
-    "width": 462,
-    "height": 717,
-    "widths": [
-      462
-    ]
-  },
-  "galeria-10": {
-    "width": 462,
-    "height": 717,
-    "widths": [
-      462
-    ]
-  },
-  "galeria-11": {
-    "width": 462,
-    "height": 717,
-    "widths": [
-      462
+      768,
+      1080,
+      1200
     ]
   },
   "logo-light": {

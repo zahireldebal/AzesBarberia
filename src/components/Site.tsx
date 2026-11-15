@@ -7,14 +7,11 @@ import { Services } from './Services';
 import { Team } from './Team';
 import { Products } from './Products';
 import { BeforeAfter } from './BeforeAfter';
-import { Gallery } from './Gallery';
-import { Reviews } from './Reviews';
 import { Location } from './Location';
 import { FaqSection } from './FaqSection';
 import { Footer } from './Footer';
 import { MobileBar } from './MobileBar';
 import { MotionProvider } from './MotionProvider';
-import { PhotoBand } from './PhotoBand';
 
 function jsonLd(lang: Lang, t: Dict) {
   const url = lang === 'es' ? `${SITE_URL}/` : `${SITE_URL}/en/`;
@@ -88,12 +85,8 @@ export function Site({ t, lang }: { t: Dict; lang: Lang }) {
         <Hero t={t} bookHref={bookHref} />
         <Services t={t} lang={lang} bookHref={bookHref} />
         <Team t={t} lang={lang} />
-        <PhotoBand alt={t.location.photosAlt.lounge} />
-        <Products t={t} lang={lang}>
-          <BeforeAfter t={t} lang={lang} />
-        </Products>
-        <Gallery t={t} lang={lang} />
-        <Reviews t={t} lang={lang} />
+        <Products t={t} lang={lang} />
+        <BeforeAfter t={t} lang={lang} />
         <Location t={t} />
         <FaqSection t={t} lang={lang} />
       </main>

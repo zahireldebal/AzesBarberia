@@ -8,6 +8,7 @@
 import sharp from 'sharp';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { removePlayButton } from './retouch.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'public', 'img');
@@ -16,17 +17,18 @@ const WIDTHS = [480, 768, 1080, 1440, 1920];
 
 const src = (...p) => path.join(ROOT, ...p);
 
-/** name, file, crop {left, top, width, height}, scale or size */
-/** Gallery tiles in use (3, 4, 5 and 9 dropped: captions cut in the source). */
-const GALLERY_KEEP = new Set([1, 2, 6, 7, 8, 10, 11]);
+const BA = (...p) => src('ANIMACION SIMULADO PRODUCTOS CAPILARES', ...p);
 
-const ALL_JOBS = [
+/**
+ * name, file, crop [left, top, width, height], scale or size [w, h],
+ * retouch: Instagram play badge to remove before cropping ({cx, cy, r, grain}),
+ * hd: two-step upscale with sharpening between steps (for small sources).
+ */
+const JOBS = [
   // Local / hero (Google Maps captures)
   { name: 'fachada', file: src('hero.png'), crop: [0, 0, 714, 795], scale: 2 },
   { name: 'local-sillones', file: src('SitioFisico', '1.png'), crop: [0, 0, 727, 858], scale: 2 },
-  { name: 'local-salon', file: src('SitioFisico', '2.png'), crop: [170, 0, 1040, 858], scale: 2 },
   { name: 'local-espejo', file: src('SitioFisico', '3.png'), crop: [0, 0, 716, 852], scale: 2 },
-  { name: 'local-lounge', file: src('SitioFisico', '4.png'), crop: [160, 0, 1050, 858], scale: 2 },
   { name: 'local-entrepiso', file: src('SitioFisico', '5.png'), crop: [0, 0, 716, 858], scale: 2 },
 
   // Team (Fresha profile photos, 340px squares)
@@ -36,41 +38,54 @@ const ALL_JOBS = [
 
   // Products (BRB story screenshots)
   { name: 'producto-cera-en-polvo', file: src('Productos', 'ceraenpolvo1.png'), crop: [697, 100, 511, 600], scale: 2 },
-  // Pomada Mate: no clean source (BRB promo graphic with "Ver post" overlay) -> label panel in the site.
+  // Pomada Mate (imagenmate.png, a paused BRB reel): play badge removed, BRB sticker cropped out.
+  { name: 'producto-pomada-mate', file: src('Productos', 'imagenmate.png'), retouch: { cx: 255, cy: 461, r: 36, grain: false }, crop: [15, 190, 430, 458], scale: 2, hd: true },
 
-  // Before / after (BRB, illustrative): same square framing on the head
-  { name: 'cera-antes', file: src('ANIMACION SIMULADO PRODUCTOS CAPILARES', 'antes.png'), crop: [70, 48, 315, 315], size: [800, 800] },
-  { name: 'cera-despues', file: src('ANIMACION SIMULADO PRODUCTOS CAPILARES', 'despues.png'), crop: [40, 75, 340, 340], size: [800, 800] },
+  // Before / after pairs (BRB reels, illustrative). Each pair shares framing,
+  // head size and position so the comparison slider lines up.
+  { name: 'cera-antes', file: BA('antes.png'), crop: [70, 48, 315, 315], size: [1000, 1000], hd: true },
+  { name: 'cera-despues', file: BA('despues.png'), crop: [40, 75, 340, 340], size: [1000, 1000], hd: true },
+  // Pomada mate: the "antes" is cropped just above the burned-in caption (the hair
+  // itself is clean); the "después" play badge sits on the neck and is removed.
+  { name: 'pomada-antes', file: BA('antesceramate.png'), crop: [150, 44, 240, 160], size: [1200, 800], hd: true },
+  { name: 'pomada-despues', file: BA('despuesceramate.png'), retouch: { cx: 259, cy: 450, r: 36 }, crop: [37, 225, 336, 224], size: [1200, 800], hd: true },
 
-  // Gallery: Instagram grid tiles, right edge trimmed to drop the reel/pin icons
-  ...[243, 525, 807, 1088, 1370].map((x, i) => ({
-    name: `galeria-${String(i + 1).padStart(2, '0')}`, file: src('Instagram', '1.png'), crop: [x + 2, 478, 242, 372], scale: 2,
-  })),
-  ...[
-    [771, 218], [589, 460], [1317, 460], [406, 703], [589, 703], [771, 703],
-  ].map(([x, y], i) => ({
-    name: `galeria-${String(i + 6).padStart(2, '0')}`, file: src('Instagram', '2.png'), crop: [x + 1, y, 154, 239], scale: 3,
-  })),
 ];
-
-const JOBS = ALL_JOBS.filter((j) => {
-  const m = /^galeria-(\d+)$/.exec(j.name);
-  return !m || GALLERY_KEEP.has(Number(m[1]));
-});
 
 async function processJob(job) {
   let img = sharp(job.file);
+  if (job.retouch) {
+    const { data, info } = await sharp(job.file).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+    removePlayButton(data, info.width, info.height, job.retouch);
+    img = sharp(data, { raw: { width: info.width, height: info.height, channels: 3 } });
+  }
   if (job.crop) {
     const [left, top, width, height] = job.crop;
     img = img.extract({ left, top, width, height });
   }
   const meta = job.crop ? { width: job.crop[2], height: job.crop[3] } : await sharp(job.file).metadata();
   const [W, H] = job.size ?? [Math.round(meta.width * job.scale), Math.round(meta.height * job.scale)];
-  const master = await img
-    .removeAlpha()
-    .resize(W, H, { kernel: 'lanczos3', fit: 'cover' })
-    .sharpen({ sigma: 0.8, m1: 0.6, m2: 1.2 })
-    .toBuffer();
+  let master;
+  if (job.hd) {
+    // two smaller steps keep edges crisper than one big jump on low-res sources
+    const mid = await img.removeAlpha()
+      .resize(Math.round((W + (meta.width)) / 2), Math.round((H + (meta.height)) / 2), { kernel: 'lanczos3', fit: 'cover' })
+      .sharpen({ sigma: 0.7, m1: 0.5, m2: 1 })
+      .png()
+      .toBuffer();
+    master = await sharp(mid).resize(W, H, { kernel: 'lanczos3', fit: 'cover' })
+      .sharpen({ sigma: 0.9, m1: 0.7, m2: 1.4 })
+      .modulate({ saturation: 1.04 })
+      .png()
+      .toBuffer();
+  } else {
+    master = await img
+      .removeAlpha()
+      .resize(W, H, { kernel: 'lanczos3', fit: 'cover' })
+      .sharpen({ sigma: 0.8, m1: 0.6, m2: 1.2 })
+      .png()
+      .toBuffer();
+  }
 
   const widths = WIDTHS.filter((w) => w < W).concat(W);
   await Promise.all(widths.map((w) =>

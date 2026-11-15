@@ -24,7 +24,7 @@ npm start          # sirve out/ para probar el build
 | Servicios, precios y duración | `src/data/services.ts` |
 | Barberos (nombre, foto, precio, especialidad) | `src/data/team.ts` |
 | Productos | `src/data/products.ts` |
-| Fotos de la galería | `src/data/gallery.ts` |
+| Antes/después de un producto | `src/data/products.ts` → `showcase` (fotos, textos y pasos) |
 | Preguntas frecuentes | `src/data/faq.ts` |
 | Cualquier texto del sitio | `src/i18n/es.ts` (español) y `src/i18n/en.ts` (inglés) |
 | URL pública del sitio (SEO, sitemap) | `src/data/business.ts` → `SITE_URL` |
@@ -47,9 +47,9 @@ Las fotos originales **no se suben** al repositorio. El script `scripts/process-
 Para cambiar o agregar una foto:
 
 1. Copiá el original a la carpeta del proyecto.
-2. Agregá o editá su entrada en `JOBS` dentro de `scripts/process-images.mjs` (nombre, archivo, recorte).
+2. Agregá o editá su entrada en `JOBS` dentro de `scripts/process-images.mjs` (nombre, archivo, recorte; `retouch` quita el botón ▶ de Instagram).
 3. Corré `npm run images`.
-4. Usá el nombre en el archivo de datos correspondiente (por ejemplo `gallery.ts`).
+4. Usá el nombre en el archivo de datos correspondiente (por ejemplo `products.ts`).
 5. Commiteá `public/img/` y `src/data/images.generated.json`.
 
 ## Desplegar en Netlify

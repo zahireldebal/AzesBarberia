@@ -10,7 +10,7 @@ import { Lightbox } from './Lightbox';
 import { WhatsApp, Zoom } from './Icons';
 import { SectionHead, formatPrice } from './SectionHead';
 
-export function Products({ t, lang, children }: { t: Dict; lang: Lang; children?: React.ReactNode }) {
+export function Products({ t, lang }: { t: Dict; lang: Lang }) {
   const reduce = useReducedMotion();
   const [filter, setFilter] = useState<ProductCategory | 'all'>('all');
   const [index, setIndex] = useState<number | null>(null);
@@ -22,7 +22,7 @@ export function Products({ t, lang, children }: { t: Dict; lang: Lang; children?
   const items = withImage.map((p) => ({ name: p.image!, alt: p.imageAlt?.[lang] ?? '', caption: `${p.brand} ${p.name}` }));
 
   return (
-    <section id="productos" className="section bg-ink-2" aria-labelledby="productos-title">
+    <section id="productos" className="section" aria-labelledby="productos-title">
       <div className="wrap">
         <SectionHead id="productos-title" title={t.products.title} intro={t.products.intro} />
 
@@ -103,7 +103,6 @@ export function Products({ t, lang, children }: { t: Dict; lang: Lang; children?
           ))}
         </ul>
 
-        {children}
       </div>
 
       <Lightbox group="productos" items={items} index={index} onChange={setIndex} labels={t.lightbox} />
