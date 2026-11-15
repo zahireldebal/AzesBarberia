@@ -1,0 +1,53 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/components/Team.tsx"
+        ],
+        "createdAt": "2026-11-15T04:28:25.922Z",
+        "reason": "Claude: <Img> is a component that builds src/srcSet from the generated image manifest; the static scan sees no src attribute"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/components/Gallery.tsx"
+        ],
+        "createdAt": "2026-11-15T04:29:22.892Z",
+        "reason": "Claude: <Img> is a component that builds src/srcSet from the generated image manifest; the static scan sees no src attribute"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/components/Products.tsx"
+        ],
+        "createdAt": "2026-11-15T04:29:23.803Z",
+        "reason": "Claude: <Img> is a component that builds src/srcSet from the generated image manifest; the static scan sees no src attribute"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/components/BeforeAfter.tsx"
+        ],
+        "createdAt": "2026-11-15T04:29:24.701Z",
+        "reason": "Claude: <Img> is a component that builds src/srcSet from the generated image manifest; the static scan sees no src attribute"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/components/Location.tsx"
+        ],
+        "createdAt": "2026-11-15T04:29:25.544Z",
+        "reason": "Claude: <Img> is a component that builds src/srcSet from the generated image manifest; the static scan sees no src attribute"
+      }
+    ]
+  }
+}

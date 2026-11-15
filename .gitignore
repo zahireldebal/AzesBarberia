@@ -1,0 +1,36 @@
+# dependencies / build
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# env / logs / temp
+.env*
+npm-debug.log*
+*.log
+.DS_Store
+Thumbs.db
+*.tmp
+
+# original source photos (only processed images in public/img are published)
+/Freshea/
+/Productos/
+/Instagram/
+/SitioFisico/
+/ANIMACION SIMULADO PRODUCTOS CAPILARES/
+/hero.png
+/logo.png
+/assets-src/
+
+# tool scratch
+/.playwright-mcp/
+/.impeccable/questions/
+/.impeccable/mocks/
+/.impeccable/review/
+/.impeccable/build/
+.claude/settings.local.json
+
+# impeccable engine binary (re-downloaded on demand) and hook cache
+.claude/skills/impeccable/scripts/bin/
+.impeccable/hook.cache.json
