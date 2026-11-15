@@ -1,0 +1,168 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #0e0e0f;
+  --color-ink-2: #151517;
+  --color-ink-3: #1d1d20;
+  --color-line: #2c2a27;
+  --color-cream: #f3ede1;
+  --color-muted: #b9b1a3;
+  --color-gold: #b08d57;
+  --color-gold-hi: #c9a46c;
+  --color-gold-lo: #8a6c40;
+  --color-suit: #c9090a;
+
+  --font-display: var(--font-cinzel), 'Times New Roman', serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    scroll-padding-top: 5rem;
+  }
+  html {
+    background: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  body {
+    background: var(--color-ink);
+    color: var(--color-cream);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+
+  ::selection { background: var(--color-gold); color: var(--color-ink); }
+  :focus-visible {
+    outline: 2px solid var(--color-gold-hi);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  a { text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
+
+  /* Scrollbar in the palette */
+  html { scrollbar-color: var(--color-gold-lo) var(--color-ink); scrollbar-width: thin; }
+
+  .tabular { font-variant-numeric: tabular-nums lining-nums; }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) { .wrap { padding-inline: 1.5rem; } }
+
+  .section { padding-block: 5.5rem 4.5rem; }
+  @media (min-width: 768px) { .section { padding-block: 8rem 7rem; } }
+
+  .h-section {
+    font-size: clamp(2rem, 6vw, 3.25rem);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* Buttons: 48px tall, lift on hover, press to 0.97 */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.4rem;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: transform 220ms var(--ease-out-expo), background-color 220ms, color 220ms, border-color 220ms, box-shadow 220ms;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: scale(0.97); transition-duration: 90ms; }
+  .btn-gold {
+    background: var(--color-gold);
+    color: var(--color-ink);
+    box-shadow: 0 6px 18px -8px rgb(0 0 0 / 0.7);
+  }
+  .btn-gold:hover { background: var(--color-gold-hi); box-shadow: 0 12px 26px -10px rgb(0 0 0 / 0.8); }
+  .btn-line {
+    border: 1px solid rgb(243 237 225 / 0.55);
+    color: var(--color-cream);
+  }
+  .btn-line:hover { border-color: var(--color-cream); background: rgb(243 237 225 / 0.06); }
+  .btn-sm { min-height: 2.75rem; padding: 0.55rem 1rem; font-size: 0.875rem; }
+
+  /* Dotted leader between a name and a price (price-board rows) */
+  .leader {
+    flex: 1;
+    min-width: 1.5rem;
+    margin-inline: 0.6rem;
+    border-bottom: 1px dotted rgb(176 141 87 / 0.55);
+    transform: translateY(-0.35em);
+  }
+
+  /* Thin gold-inset photo frame */
+  .frame { position: relative; overflow: hidden; background: var(--color-ink-2); }
+  .frame::after {
+    content: '';
+    position: absolute;
+    inset: 0.5rem;
+    border: 1px solid rgb(201 164 108 / 0.45);
+    pointer-events: none;
+  }
+
+  /* Scroll reveal: content is visible by default; only hidden once JS is
+     confirmed (html.js) and only until it enters the viewport. */
+  html.js .reveal:not(.is-in) { opacity: 0; transform: translateY(18px); }
+  .reveal {
+    transition: opacity 700ms var(--ease-out-expo), transform 900ms var(--ease-out-expo);
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+}
+
+/* Hero intro: the one authored moment */
+@keyframes rule-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes logo-resolve {
+  from { opacity: 0; filter: blur(14px); transform: scale(1.03); }
+  to { opacity: 1; filter: blur(0); transform: none; }
+}
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes hero-pan { from { transform: scale(1.08); } to { transform: scale(1); } }
+
+.hero-logo { animation: logo-resolve 1400ms var(--ease-out-expo) both; }
+.hero-rule { transform-origin: center; animation: rule-draw 1100ms 350ms var(--ease-out-expo) both; }
+.hero-rise { animation: rise 900ms var(--ease-out-expo) both; animation-delay: calc(700ms + var(--i, 0) * 110ms); }
+.hero-img { animation: hero-pan 2600ms var(--ease-out-expo) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+  html.js .reveal:not(.is-in) { opacity: 1; transform: none; }
+}

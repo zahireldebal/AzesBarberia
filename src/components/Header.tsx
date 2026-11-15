@@ -1,0 +1,168 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import type { Dict } from '@/i18n/es';
+import { BookLink } from './BookLink';
+import { Close, MenuIcon } from './Icons';
+import { SuitRule } from './Suits';
+
+type Props = { t: Dict; bookHref: string; homeHref: string; altLangHref: string };
+
+export function Header({ t, bookHref, homeHref, altLangHref }: Props) {
+  const [compact, setCompact] = useState(false);
+  const [open, setOpen] = useState(false);
+  const reduce = useReducedMotion();
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
+
+  const links = [
+    ['#servicios', t.nav.services],
+    ['#equipo', t.nav.team],
+    ['#productos', t.nav.products],
+    ['#galeria', t.nav.gallery],
+    ['#local', t.nav.location],
+    ['#preguntas', t.nav.faq],
+  ] as const;
+
+  useEffect(() => {
+    const onScroll = () => setCompact(window.scrollY > 48);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Menu: lock scroll, ESC closes, focus moves in and returns to the button.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    panel.current?.querySelector<HTMLElement>('a')?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Tab' && panel.current) {
+        const f = panel.current.querySelectorAll<HTMLElement>('a, button');
+        const first = f[0];
+        const last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    const btn = menuButton.current;
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener('keydown', onKey);
+      btn?.focus();
+    };
+  }, [open]);
+
+  return (
+    <>
+      <a href="#contenido" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:bg-cream focus:px-4 focus:py-3 focus:text-ink">
+        {t.skip}
+      </a>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,height] duration-300 ease-[var(--ease-out-expo)] ${
+          compact ? 'h-16 bg-ink/95 shadow-[0_1px_0_rgb(176_141_87/0.25),0_10px_30px_-12px_rgb(0_0_0/0.8)]' : 'h-20 bg-gradient-to-b from-ink/80 to-transparent'
+        }`}
+      >
+        <div className="wrap flex h-full items-center justify-between gap-4">
+          <a href={homeHref} className="block shrink-0" aria-label="Azes Barbería">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/img/logo-light-320.webp"
+              alt=""
+              width={320}
+              height={278}
+              className={`w-auto transition-[height] duration-300 ${compact ? 'h-10' : 'h-12'}`}
+            />
+          </a>
+
+          <nav aria-label={t.nav.menu} className="hidden lg:block">
+            <ul className="flex items-center gap-7 text-[0.8rem] font-semibold uppercase tracking-[0.14em]">
+              {links.map(([href, label]) => (
+                <li key={href}>
+                  <a href={href} className="py-3 text-cream/85 no-underline transition-colors hover:text-gold-hi">{label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <a
+              href={altLangHref}
+              hrefLang={t.lang === 'es' ? 'en' : 'es'}
+              aria-label={t.nav.langSwitchLabel}
+              className="inline-flex min-h-11 min-w-11 items-center justify-center px-2 text-[0.8rem] font-bold tracking-[0.14em] text-cream/85 no-underline hover:text-gold-hi"
+            >
+              {t.lang === 'es' ? 'EN' : 'ES'}
+            </a>
+            <BookLink href={bookHref} newTabLabel={t.book.newTab} className="btn btn-gold btn-sm hidden sm:inline-flex">
+              {t.book.short}
+            </BookLink>
+            <button
+              ref={menuButton}
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-expanded={open}
+              aria-controls="menu-movil"
+              className="inline-flex size-11 items-center justify-center text-2xl text-cream lg:hidden"
+            >
+              <MenuIcon />
+              <span className="sr-only">{t.nav.menu}</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="menu-movil"
+            ref={panel}
+            role="dialog"
+            aria-modal="true"
+            aria-label={t.nav.menu}
+            className="fixed inset-0 z-[60] flex flex-col bg-ink px-4 pb-8 pt-4 lg:hidden"
+            initial={reduce ? { opacity: 0 } : { opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
+            animate={reduce ? { opacity: 1 } : { opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="flex h-12 items-center justify-end">
+              <button type="button" onClick={() => setOpen(false)} className="inline-flex size-11 items-center justify-center text-2xl">
+                <Close />
+                <span className="sr-only">{t.nav.close}</span>
+              </button>
+            </div>
+            <nav aria-label={t.nav.menu} className="mt-6 flex-1">
+              <ul className="space-y-1">
+                {links.map(([href, label], i) => (
+                  <motion.li
+                    key={href}
+                    initial={reduce ? false : { opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.12 + i * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <a
+                      href={href}
+                      onClick={() => setOpen(false)}
+                      className="block py-3 font-display text-3xl uppercase tracking-[0.08em] text-cream no-underline"
+                    >
+                      {label}
+                    </a>
+                  </motion.li>
+                ))}
+              </ul>
+            </nav>
+            <SuitRule className="mb-6" />
+            <BookLink href={bookHref} newTabLabel={t.book.newTab} className="btn btn-gold w-full">
+              {t.book.primary}
+            </BookLink>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
