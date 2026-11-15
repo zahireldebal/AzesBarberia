@@ -1,8 +1,20 @@
-import { Cinzel, Manrope } from 'next/font/google';
+import localFont from 'next/font/local';
 import '@/app/globals.css';
 
-const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '600', '700'], variable: '--font-cinzel', display: 'swap' });
-const manrope = Manrope({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--font-manrope', display: 'swap' });
+// Self-hosted variable fonts (OFL, latin subset incl. á é í ó ú ñ ¿) so the
+// build never depends on reaching Google Fonts. Licenses in src/fonts/.
+const cinzel = localFont({
+  src: '../fonts/cinzel-latin-variable.woff2',
+  weight: '400 900',
+  variable: '--font-cinzel',
+  display: 'swap',
+});
+const manrope = localFont({
+  src: '../fonts/manrope-latin-variable.woff2',
+  weight: '200 800',
+  variable: '--font-manrope',
+  display: 'swap',
+});
 
 // Marks JS as available before first paint (so scroll reveals never hide
 // content without JS), then reveals .reveal elements as they enter the viewport.
