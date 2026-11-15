@@ -110,6 +110,33 @@
         ],
         "createdAt": "2026-11-15T04:44:32.435Z",
         "reason": "Claude: <Img> is a component that builds src/srcSet from the generated image manifest; the static scan sees no src attribute"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-11-15T04:58:37.213Z",
+        "reason": "Claude: throwaway decision-page skeleton sketch (gitignored, never shipped); system fonts are placeholders"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-11-15T04:58:38.046Z",
+        "reason": "Claude: throwaway decision-page skeleton sketch (gitignored, never shipped); system fonts are placeholders"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-11-15T04:58:38.829Z",
+        "reason": "Claude: throwaway decision-page skeleton sketch (gitignored, never shipped); system fonts are placeholders"
       }
     ]
   }
