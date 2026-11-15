@@ -28,6 +28,7 @@ export function Hero({ t, bookHref }: Props) {
           className="hero-img size-full object-cover object-[50%_35%] md:object-[50%_42%]"
         />
       </picture>
+      <div aria-hidden className="grain absolute inset-0 -z-20" />
       <div
         aria-hidden
         className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(14_14_15/0.55)_0%,rgb(14_14_15/0.35)_30%,rgb(14_14_15/0.82)_62%,#0e0e0f_100%)] md:bg-[radial-gradient(ellipse_at_50%_42%,rgb(14_14_15/0.5),rgb(14_14_15/0.72)_75%),linear-gradient(180deg,transparent_60%,#0e0e0f)]"

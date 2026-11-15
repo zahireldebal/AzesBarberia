@@ -38,7 +38,9 @@ const BA = (...p) => src('ANIMACION SIMULADO PRODUCTOS CAPILARES', ...p);
  */
 const JOBS = [
   // Local / hero (Google Maps captures)
-  { name: 'fachada', file: src('hero.png'), crop: [0, 0, 714, 795], scale: 2.5 },
+  // The hero is a heavily compressed capture shown full-screen: the "soft" profile
+  // removes compression blocks first and avoids the halos local contrast would add.
+  { name: 'fachada', file: src('hero.png'), crop: [0, 0, 714, 795], scale: 3, profile: 'soft' },
   { name: 'local-sillones', file: src('SitioFisico', '1.png'), crop: [0, 0, 727, 858], scale: 2 },
   { name: 'local-espejo', file: src('SitioFisico', '3.png'), crop: [0, 0, 716, 852], scale: 2 },
   { name: 'local-entrepiso', file: src('SitioFisico', '5.png'), crop: [0, 0, 716, 858], scale: 2 },
@@ -74,7 +76,9 @@ async function processJob(job) {
   const meta = job.crop ? { width: job.crop[2], height: job.crop[3] } : await sharp(job.file).metadata();
   const [W, H] = job.size ?? [Math.round(meta.width * job.scale), Math.round(meta.height * job.scale)];
   const cropped = await img.removeAlpha().png().toBuffer();
-  const master = await enhance(job.name, cropped, meta, W, H);
+  const master = job.profile === 'soft'
+    ? await enhanceSoft(cropped, meta, W, H)
+    : await enhance(job.name, cropped, meta, W, H);
 
   const widths = WIDTHS.filter((w) => w < W).concat(W);
   await Promise.all(widths.map((w) =>
@@ -84,6 +88,27 @@ async function processJob(job) {
 }
 
 /** Upscale + local contrast + sharpen. Returns a PNG buffer of exactly W x H. */
+/**
+ * For compressed sources shown large: a light denoise at source size removes
+ * JPEG blocking, then three Lanczos steps, then a wide low-amount sharpen
+ * (perceived crispness without halos). No CLAHE: it would re-amplify blocks.
+ */
+async function enhanceSoft(input, meta, W, H) {
+  let buf = await sharp(input).blur(0.55).png().toBuffer();
+  const steps = 3;
+  for (let i = 1; i <= steps; i++) {
+    const w = Math.round(meta.width + ((W - meta.width) * i) / steps);
+    const h = Math.round(meta.height + ((H - meta.height) * i) / steps);
+    buf = await sharp(buf).resize(w, h, { kernel: 'lanczos3', fit: 'cover' })
+      .sharpen({ sigma: 0.6, m1: 0.25, m2: 0.5 })
+      .png().toBuffer();
+  }
+  return sharp(buf)
+    .sharpen({ sigma: 1.6, m1: 0.45, m2: 0.7, x1: 3, y2: 8, y3: 12 })
+    .modulate({ saturation: 1.06 })
+    .png().toBuffer();
+}
+
 async function enhance(name, input, meta, W, H) {
   let base = input;
   if (ESRGAN) {

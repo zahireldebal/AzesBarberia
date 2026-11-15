@@ -1,13 +1,14 @@
 {
   "fachada": {
-    "width": 1785,
-    "height": 1988,
+    "width": 2142,
+    "height": 2385,
     "widths": [
       480,
       768,
       1080,
       1440,
-      1785
+      1920,
+      2142
     ]
   },
   "local-sillones": {

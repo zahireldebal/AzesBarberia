@@ -13,6 +13,8 @@ type Props = {
   className?: string;
   priority?: boolean;
   style?: React.CSSProperties;
+  /** Blur-in on load. Off for images that move with user input (the compare slider). */
+  fx?: boolean;
 };
 
 /**
@@ -20,7 +22,7 @@ type Props = {
  * Loaded state lives in React so re-renders never put the blur back; the
  * inline script in Shell.tsx marks images that finish before hydration.
  */
-export function Img({ name, alt, sizes, className = '', priority, style }: Props) {
+export function Img({ name, alt, sizes, className = '', priority, style, fx = true }: Props) {
   const { width, height } = imageEntry(name);
   const ref = useRef<HTMLImageElement>(null);
   const [loaded, setLoaded] = useState(false);
@@ -40,7 +42,7 @@ export function Img({ name, alt, sizes, className = '', priority, style }: Props
       width={width}
       height={height}
       alt={alt}
-      className={`fx-img ${loaded ? 'is-loaded' : ''} ${className}`}
+      className={`${fx ? 'fx-img' : ''} ${loaded ? 'is-loaded' : ''} ${className}`}
       style={style}
       loading={priority ? 'eager' : 'lazy'}
       decoding={priority ? 'sync' : 'async'}
