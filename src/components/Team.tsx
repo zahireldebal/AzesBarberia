@@ -9,7 +9,7 @@ type Props = { t: Dict; lang: Lang };
 
 export function Team({ t, lang }: Props) {
   return (
-    <section id="equipo" className="section bg-ink-2" aria-labelledby="equipo-title">
+    <section id="equipo" className="section" aria-labelledby="equipo-title">
       <div className="wrap">
         <SectionHead id="equipo-title" title={t.team.title} intro={t.team.intro} />
 

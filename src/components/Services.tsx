@@ -12,7 +12,7 @@ function duration(min: number, t: Dict) {
 
 export function Services({ t, lang, bookHref }: Props) {
   return (
-    <section id="servicios" className="section" aria-labelledby="servicios-title">
+    <section id="servicios" className="section bg-ink-2" aria-labelledby="servicios-title">
       <div className="wrap">
         <SectionHead id="servicios-title" title={t.services.title} intro={t.services.intro} />
 

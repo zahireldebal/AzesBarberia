@@ -19,8 +19,8 @@ export function Header({ t, bookHref, homeHref, altLangHref }: Props) {
   // Same order as the sections on the page. On desktop the list is split
   // around the centred logo: three links left, two right.
   const links = [
-    ['#servicios', t.nav.services],
     ['#equipo', t.nav.team],
+    ['#servicios', t.nav.services],
     ['#local', t.nav.location],
     ['#productos', t.nav.products],
     ['#preguntas', t.nav.faq],
