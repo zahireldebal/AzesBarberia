@@ -8,31 +8,37 @@ import { Clock, Pin, Star } from './Icons';
 type Props = { t: Dict; bookHref: string };
 
 export function Hero({ t, bookHref }: Props) {
-  const fachada = imageEntry('fachada');
+  const salon = imageEntry('local-sillones');
   const rating = BUSINESS.rating.value.toLocaleString(t.locale, { minimumFractionDigits: 1 });
 
   return (
     <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden" aria-labelledby="hero-title">
-      {/* The façade (hero.png) on every screen size */}
-      <picture className="hero-parallax absolute inset-0 -z-20">
+      {/* The shop floor under the hexagonal light ceiling: the most recognisable
+          view of Azes. The picture bleeds 3% past each side to hide the thin dark
+          edge left by the source capture. */}
+      <picture className="hero-parallax absolute inset-y-0 -inset-x-[3%] -z-20">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/img/fachada-768.webp"
-          srcSet={srcSet('fachada')}
-          sizes="100vw"
-          width={fachada.width}
-          height={fachada.height}
+          src="/img/local-sillones-768.webp"
+          srcSet={srcSet('local-sillones')}
+          sizes="106vw"
+          width={salon.width}
+          height={salon.height}
           alt={t.hero.imageAlt}
           fetchPriority="high"
           decoding="sync"
-          className="hero-img size-full object-cover object-[50%_35%] md:object-[50%_42%]"
+          className="hero-img size-full object-cover object-[45%_30%] md:object-[50%_34%] [filter:saturate(0.85)_contrast(1.08)_brightness(0.9)]"
         />
       </picture>
       <div aria-hidden className="grain absolute inset-0 -z-20" />
+      {/* Scrim: the room is white, so it needs more ink than the façade did.
+          A centred pool of dark holds the logo; the bottom melts into the page. */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(14_14_15/0.55)_0%,rgb(14_14_15/0.35)_30%,rgb(14_14_15/0.82)_62%,#0e0e0f_100%)] md:bg-[radial-gradient(ellipse_at_50%_42%,rgb(14_14_15/0.5),rgb(14_14_15/0.72)_75%),linear-gradient(180deg,transparent_60%,#0e0e0f)]"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(14_14_15/0.7)_0%,rgb(14_14_15/0.5)_28%,rgb(14_14_15/0.86)_60%,#0e0e0f_100%)] md:bg-[radial-gradient(ellipse_55%_50%_at_50%_50%,rgb(14_14_15/0.8),rgb(14_14_15/0.5)_70%,rgb(14_14_15/0.62)),linear-gradient(180deg,rgb(14_14_15/0.3)_0%,transparent_22%,transparent_62%,#0e0e0f_100%)]"
       />
+      {/* A faint violet glow echoes the neon of the mirrors */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-[radial-gradient(ellipse_70%_60%_at_50%_100%,rgb(124_92_255/0.12),transparent_70%)]" />
 
       <div className="hero-fade wrap flex flex-1 flex-col items-center justify-end pb-28 pt-28 text-center sm:pb-20 md:justify-center md:pb-16">
         <h1 id="hero-title" className="w-[min(78vw,26rem)] md:w-[30rem]">

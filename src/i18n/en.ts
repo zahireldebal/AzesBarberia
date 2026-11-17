@@ -18,6 +18,7 @@ const en: Dict = {
     location: 'The shop',
     faq: 'FAQ',
     menu: 'Menu',
+    menuMore: 'More sections',
     close: 'Close',
     langSwitch: 'Español',
     langSwitchLabel: 'View the site in Spanish',
@@ -37,7 +38,7 @@ const en: Dict = {
     pricesFrom: 'Haircuts from',
     ratingLabel: 'on Fresha',
     hours: 'Mon to Sat · 9am to 7pm',
-    imageAlt: 'Azes Barbería storefront on the corner of Sarandí and 33, Maldonado',
+    imageAlt: 'Inside Azes Barbería: barbers at work under the hexagonal light ceiling',
   },
   services: {
     title: 'Services',
@@ -100,8 +101,7 @@ const en: Dict = {
     directions: 'Get directions',
     loadMap: 'Show map',
     mapNote: 'The map loads Google Maps.',
-    mapTitle: 'Map of Azes Barbería on Google Maps',
-    photosAlt: {
+    mapTitle: 'Map of Azes Barbería on Google Maps',    photosAlt: {
       salon: 'Main floor with black barber chairs and the hexagonal light ceiling',
       espejo: 'Work station with a violet-lit mirror',
       lounge: 'Mezzanine lounge with sofas and a pool table',

@@ -39,7 +39,9 @@ els.forEach(function(e){io.observe(e)})})})();`;
 
 export function Shell({ lang, children }: { lang: string; children: React.ReactNode }) {
   return (
-    <html lang={lang} className={`${cinzel.variable} ${manrope.variable}`}>
+    // The inline MOTION script adds `js` and CSS vars to <html> before React
+    // hydrates; that mismatch is intentional, so React must not report it.
+    <html lang={lang} className={`${cinzel.variable} ${manrope.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: MOTION }} />
       </head>

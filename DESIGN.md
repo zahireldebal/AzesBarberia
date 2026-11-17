@@ -190,7 +190,7 @@ A single centred column: content sits in a 72rem container with a 1rem gutter on
 
 Narrow reading content (price board, FAQ, review) is held to about 48rem and centred. Image groups use tight 0.5rem gutters (gallery, location mosaic) so the photos read as one wall; the team row uses five equal frames in one line from 1024px, wrapping centred (two, then three per row) below. Feature pairs (before/after) split roughly 1.05 : 1 from 768px and stack on phones.
 
-The hero is full viewport height (100svh): on phones the composition anchors to the bottom so the booking button sits in thumb reach, stacked full-width with its secondary; from 640px the buttons sit side by side and from 768px the composition centres over the landscape interior shot. Phones gain a fixed bottom bar (booking plus WhatsApp) once the hero scrolls away; it respects the safe-area inset and hides from 1024px, where the header carries a small booking button. Breakpoints: 640px, 768px, 1024px.
+The hero is full viewport height (100svh): on phones the composition anchors to the bottom so the booking button sits in thumb reach, stacked full-width with its secondary; from 640px the buttons sit side by side and from 768px the composition centres over the interior shot (the floor under the hexagonal light ceiling, `local-sillones`). The façade is used as the map placeholder in the Location section. Section order: Services, Team, Location, Products, Before / After, FAQ. Phones gain a fixed bottom bar (booking plus WhatsApp) once the hero scrolls away; it respects the safe-area inset and hides from 1024px, where the header carries a small booking button. Breakpoints: 640px, 768px, 1024px.
 
 ## Elevation & Depth
 
@@ -231,7 +231,7 @@ A gold hairline that fades in from transparent on both sides and is broken in th
 Services are a ruled list, not cards: hairline rules top, bottom and between rows; each row is Title name, a dotted gold leader, and a tabular gold price with a small "from" label; beneath it a muted description, an uppercase duration, and a small outline "Book this" button deep-linked to that service on Fresha. The same leader pattern sets product prices and the opening hours.
 
 ### Photo Frame
-Square-cornered photo on a Back-Room Black backing with the 0.5rem gold inset line. Team portraits sit at 4:5 with 35% grayscale that lifts to full colour and scales 1.04 on hover (700ms). Location and product photos use the same frame; the gallery uses bare tiles in a tight grid with a zoom mark on hover.
+Square-cornered photo on a Back-Room Black backing with the 0.5rem gold inset line. Team portraits sit at 4:5 in full black and white (so photos taken in different places read as one set), lifting to full colour and scaling 1.04 on hover (700ms). Product photos sit square. Location and product photos use the same frame; the gallery uses bare tiles in a tight grid with a zoom mark on hover.
 
 ### Label Panel
 Where no clean product photo exists, a typographic panel stands in: Shelf Black inside a photo frame, the brand in large Cinzel gold, a short gold hairline, the product name in tracked Cinzel cream, the size in a muted label. 16:9 on phones, 4:5 from 768px.
@@ -240,7 +240,7 @@ Where no clean product photo exists, a typographic panel stands in: Shelf Black 
 A framed square photo that crossfades (900ms) between two states, with a Cinzel state tag in the corner and a two-button toggle below (cream for the active state, outline for the other). It plays once when first in view unless reduced motion is set, and is labelled illustrative.
 
 ### Navigation
-Fixed header, 80px over the hero with an ink-to-transparent scrim, compacting to 64px at 95% ink with the header seam after 48px of scroll. Desktop links are uppercase labels in cream at 85% turning Polished Gilt on hover; a language switch (EN / ES) and a small gold booking button sit right. Below 1024px a menu button opens a full-screen ink panel that wipes down (clip-path, 450ms), lists links in 1.875rem Cinzel, and ends with the suit rule and a full-width gold booking button. Scroll is locked, focus is trapped, ESC closes.
+Fixed header with the logo centred on a three-column grid (equal side tracks), 80px (96px from 1024px) over the hero with an ink-to-transparent scrim, compacting to 64px (72px desktop) at 80% ink with a backdrop blur and the header seam after 48px of scroll. On desktop the links split around the logo, in page order: Services, Team, The shop on the left; Products, FAQ on the right, followed by the language switch (EN / ES) and a small gold booking button. Links are uppercase labels in cream at 85% turning Polished Gilt on hover. Below 1024px the menu button sits left, the logo centre and the language switch right. Below 1024px a menu button opens a full-screen ink panel that wipes down (clip-path, 450ms), lists links in 1.875rem Cinzel, and ends with the suit rule and a full-width gold booking button. Scroll is locked, focus is trapped, ESC closes.
 
 ### Mobile Booking Bar
 Phones only: fixed to the bottom once the hero has scrolled 70% away, sliding up on the expo-out curve (500ms). A flexible gold booking button plus a 48px square outline WhatsApp button, on 95% ink with a gold hairline above.

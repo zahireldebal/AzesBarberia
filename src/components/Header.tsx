@@ -16,13 +16,22 @@ export function Header({ t, bookHref, homeHref, altLangHref }: Props) {
   const menuButton = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
 
+  // Same order as the sections on the page. On desktop the list is split
+  // around the centred logo: three links left, two right.
   const links = [
     ['#servicios', t.nav.services],
     ['#equipo', t.nav.team],
-    ['#productos', t.nav.products],
     ['#local', t.nav.location],
+    ['#productos', t.nav.products],
     ['#preguntas', t.nav.faq],
   ] as const;
+  const leftLinks = links.slice(0, 3);
+  const rightLinks = links.slice(3);
+  const navLink = (href: string, label: string) => (
+    <li key={href}>
+      <a href={href} className="nav-link py-3 text-cream/85 no-underline transition-colors hover:text-gold-hi">{label}</a>
+    </li>
+  );
 
   useEffect(() => {
     const onScroll = () => setCompact(window.scrollY > 48);
@@ -62,55 +71,68 @@ export function Header({ t, bookHref, homeHref, altLangHref }: Props) {
         {t.skip}
       </a>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,height] duration-300 ease-[var(--ease-out-expo)] ${
-          compact ? 'h-16 bg-ink/95 shadow-[0_1px_0_rgb(176_141_87/0.25),0_10px_30px_-12px_rgb(0_0_0/0.8)]' : 'h-20 bg-gradient-to-b from-ink/80 to-transparent'
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,height,backdrop-filter] duration-300 ease-[var(--ease-out-expo)] ${
+          compact
+            ? 'h-16 bg-ink/80 shadow-[0_1px_0_rgb(176_141_87/0.25),0_10px_30px_-12px_rgb(0_0_0/0.8)] backdrop-blur-md backdrop-saturate-150 lg:h-[4.5rem]'
+            : 'h-20 bg-gradient-to-b from-ink/85 to-transparent lg:h-24'
         }`}
       >
-        <div className="wrap flex h-full items-center justify-between gap-4">
-          <a href={homeHref} className="block shrink-0" aria-label="Azes Barbería">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/img/logo-light-320.webp"
-              alt=""
-              width={320}
-              height={278}
-              className={`w-auto transition-[height] duration-300 ${compact ? 'h-10' : 'h-12'}`}
-            />
-          </a>
-
-          <nav aria-label={t.nav.menu} className="hidden lg:block">
-            <ul className="flex items-center gap-7 text-[0.8rem] font-semibold uppercase tracking-[0.14em]">
-              {links.map(([href, label]) => (
-                <li key={href}>
-                  <a href={href} className="nav-link py-3 text-cream/85 no-underline transition-colors hover:text-gold-hi">{label}</a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <a
-              href={altLangHref}
-              hrefLang={t.lang === 'es' ? 'en' : 'es'}
-              aria-label={t.nav.langSwitchLabel}
-              className="inline-flex min-h-11 min-w-11 items-center justify-center px-2 text-[0.8rem] font-bold tracking-[0.14em] text-cream/85 no-underline hover:text-gold-hi"
-            >
-              {t.lang === 'es' ? 'EN' : 'ES'}
-            </a>
-            <BookLink href={bookHref} newTabLabel={t.book.newTab} className="btn btn-gold btn-sm hidden sm:inline-flex">
-              {t.book.short}
-            </BookLink>
+        {/* Three columns with equal side tracks keep the logo truly centred. */}
+        <div className="wrap grid h-full grid-cols-[1fr_auto_1fr] items-center gap-4">
+          {/* Left: menu button (phones/tablets) or the first three links (desktop) */}
+          <div className="flex items-center justify-start">
             <button
               ref={menuButton}
               type="button"
               onClick={() => setOpen(true)}
               aria-expanded={open}
               aria-controls="menu-movil"
-              className="inline-flex size-11 items-center justify-center text-2xl text-cream lg:hidden"
+              className="-ml-2 inline-flex size-11 items-center justify-center text-2xl text-cream lg:hidden"
             >
               <MenuIcon />
               <span className="sr-only">{t.nav.menu}</span>
             </button>
+            <nav aria-label={t.nav.menu} className="hidden lg:block">
+              <ul className="flex items-center gap-8 text-[0.8rem] font-semibold uppercase tracking-[0.14em]">
+                {leftLinks.map(([href, label]) => navLink(href, label))}
+              </ul>
+            </nav>
+          </div>
+
+          {/* Centre: the logo */}
+          <a href={homeHref} className="block justify-self-center" aria-label="Azes Barbería">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/img/logo-light-320.webp"
+              alt=""
+              width={320}
+              height={278}
+              className={`w-auto drop-shadow-[0_2px_10px_rgb(0_0_0/0.6)] transition-[height] duration-300 ease-[var(--ease-out-expo)] ${
+                compact ? 'h-11 lg:h-12' : 'h-14 lg:h-[4.5rem]'
+              }`}
+            />
+          </a>
+
+          {/* Right: last two links, language and booking */}
+          <div className="flex items-center justify-end gap-2 lg:gap-8">
+            <nav aria-label={t.nav.menuMore} className="hidden lg:block">
+              <ul className="flex items-center gap-8 text-[0.8rem] font-semibold uppercase tracking-[0.14em]">
+                {rightLinks.map(([href, label]) => navLink(href, label))}
+              </ul>
+            </nav>
+            <div className="flex items-center gap-2">
+              <a
+                href={altLangHref}
+                hrefLang={t.lang === 'es' ? 'en' : 'es'}
+                aria-label={t.nav.langSwitchLabel}
+                className="inline-flex min-h-11 min-w-11 items-center justify-center px-2 text-[0.8rem] font-bold tracking-[0.14em] text-cream/85 no-underline hover:text-gold-hi"
+              >
+                {t.lang === 'es' ? 'EN' : 'ES'}
+              </a>
+              <BookLink href={bookHref} newTabLabel={t.book.newTab} className="btn btn-gold btn-sm hidden sm:inline-flex">
+                {t.book.short}
+              </BookLink>
+            </div>
           </div>
         </div>
       </header>

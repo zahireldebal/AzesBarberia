@@ -8,8 +8,8 @@ export function Footer({ t, bookHref }: { t: Dict; bookHref: string }) {
   const links = [
     ['#servicios', t.nav.services],
     ['#equipo', t.nav.team],
-    ['#productos', t.nav.products],
     ['#local', t.nav.location],
+    ['#productos', t.nav.products],
     ['#preguntas', t.nav.faq],
   ] as const;
 

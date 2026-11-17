@@ -85,9 +85,10 @@ export function Site({ t, lang }: { t: Dict; lang: Lang }) {
         <Hero t={t} bookHref={bookHref} />
         <Services t={t} lang={lang} bookHref={bookHref} />
         <Team t={t} lang={lang} />
+        {/* The room is the shop's strongest picture: shown right after the team */}
+        <Location t={t} />
         <Products t={t} lang={lang} />
         <BeforeAfter t={t} lang={lang} />
-        <Location t={t} />
         <FaqSection t={t} lang={lang} />
       </main>
       <Footer t={t} bookHref={bookHref} />

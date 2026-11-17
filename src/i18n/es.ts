@@ -16,6 +16,7 @@ const es = {
     location: 'El local',
     faq: 'Preguntas',
     menu: 'Menú',
+    menuMore: 'Más secciones',
     close: 'Cerrar',
     langSwitch: 'English',
     langSwitchLabel: 'Ver el sitio en inglés',
@@ -35,7 +36,7 @@ const es = {
     pricesFrom: 'Cortes desde',
     ratingLabel: 'en Fresha',
     hours: 'Lun a sáb · 9 a 19',
-    imageAlt: 'Fachada de Azes Barbería en la esquina de Sarandí y 33, Maldonado',
+    imageAlt: 'Interior de Azes Barbería: barberos trabajando bajo el techo de luces hexagonales',
   },
   services: {
     title: 'Servicios',
@@ -98,8 +99,7 @@ const es = {
     directions: 'Cómo llegar',
     loadMap: 'Mostrar mapa',
     mapNote: 'El mapa carga Google Maps.',
-    mapTitle: 'Mapa de Azes Barbería en Google Maps',
-    photosAlt: {
+    mapTitle: 'Mapa de Azes Barbería en Google Maps',    photosAlt: {
       salon: 'Salón principal con sillones negros y techo de luces hexagonales',
       espejo: 'Puesto de trabajo con espejo iluminado en violeta',
       lounge: 'Entrepiso de espera con sillones y mesa de pool',

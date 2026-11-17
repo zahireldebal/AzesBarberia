@@ -47,6 +47,8 @@ export function Img({ name, alt, sizes, className = '', priority, style, fx = tr
       loading={priority ? 'eager' : 'lazy'}
       decoding={priority ? 'sync' : 'async'}
       fetchPriority={priority ? 'high' : undefined}
+      // Shell.tsx's inline script may add `is-loaded` before hydration (cached images).
+      suppressHydrationWarning
       onLoad={() => setLoaded(true)}
       onError={() => setLoaded(true)}
     />
