@@ -1,4 +1,4 @@
-# Azes Barbería: sitio web
+# Azes Barbería: sitio webb
 
 Sitio one-page de Azes Barbería (Maldonado, Uruguay), en español y en inglés. Las reservas se hacen en **Fresha**: el sitio solo enlaza a Fresha, nunca la reemplaza ni la embebe.
 
