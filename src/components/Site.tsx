@@ -1,5 +1,5 @@
 import type { Dict } from '@/i18n/es';
-import { BUSINESS, SITE_URL, bookingUrl, type Lang } from '@/data/business';
+import { BUSINESS, GOOGLE_REVIEWS_URL, SITE_URL, bookingUrl, type Lang } from '@/data/business';
 import { SERVICES } from '@/data/services';
 import { Header } from './Header';
 import { Hero } from './Hero';
@@ -8,6 +8,7 @@ import { Team } from './Team';
 import { Products } from './Products';
 import { BeforeAfter } from './BeforeAfter';
 import { Location } from './Location';
+import { Reviews } from './Reviews';
 import { FaqSection } from './FaqSection';
 import { Footer } from './Footer';
 import { MobileBar } from './MobileBar';
@@ -46,13 +47,9 @@ function jsonLd(lang: Lang, t: Dict) {
         closes: '19:00',
       },
     ],
-    sameAs: [BUSINESS.instagram],
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: BUSINESS.rating.value,
-      reviewCount: BUSINESS.rating.count,
-      bestRating: 5,
-    },
+    // No aggregateRating: the reviews live on Google, and Google's structured-data
+    // rules forbid marking up ratings collected by a third party on your own site.
+    sameAs: [BUSINESS.instagram, GOOGLE_REVIEWS_URL],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: t.services.title,
@@ -86,6 +83,7 @@ export function Site({ t, lang }: { t: Dict; lang: Lang }) {
         {/* The barbers come first: people pick who cuts them before what */}
         <Team t={t} lang={lang} />
         <Services t={t} lang={lang} bookHref={bookHref} />
+        <Reviews t={t} lang={lang} />
         {/* The room is the shop's strongest picture: shown early */}
         <Location t={t} />
         <Products t={t} lang={lang} />

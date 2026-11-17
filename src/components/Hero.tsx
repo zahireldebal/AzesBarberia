@@ -1,5 +1,5 @@
 import type { Dict } from '@/i18n/es';
-import { BUSINESS } from '@/data/business';
+import { BUSINESS, GOOGLE_REVIEWS_URL } from '@/data/business';
 import { SERVICES } from '@/data/services';
 import { srcSet, imageEntry } from '@/lib/images';
 import { BookLink } from './BookLink';
@@ -76,9 +76,21 @@ export function Hero({ t, bookHref }: Props) {
           <li className="font-semibold text-cream">
             {t.hero.pricesFrom} <span className="tabular text-gold-hi">$U {Math.min(...SERVICES.filter((s) => s.id !== 'barba').map((s) => s.priceFrom)).toLocaleString(t.locale)}</span>
           </li>
-          <li className="flex items-center gap-1.5">
-            <Star className="text-gold-hi" />
-            <span className="tabular font-semibold text-cream">{rating}</span> {t.hero.ratingLabel}
+          <li>
+            {/* Shortcut straight to the Google reviews */}
+            <a
+              href={GOOGLE_REVIEWS_URL}
+              target="_blank"
+              rel="noopener"
+              className="group inline-flex items-center gap-1.5 text-cream/85 no-underline transition-colors hover:text-gold-hi"
+            >
+              <Star className="text-gold-hi" />
+              <span className="tabular font-semibold text-cream group-hover:text-gold-hi">{rating}</span>
+              <span className="underline decoration-gold/50 underline-offset-4 group-hover:decoration-gold-hi">
+                {t.hero.ratingLabel.replace('{n}', BUSINESS.rating.count.toLocaleString(t.locale))}
+              </span>
+              <span className="sr-only">{t.reviews.newTab}</span>
+            </a>
           </li>
           <li className="flex items-center gap-1.5"><Clock className="text-gold" />{t.hero.hours}</li>
           <li className="flex items-center gap-1.5"><Pin className="text-gold" />{BUSINESS.street}, {BUSINESS.city}</li>

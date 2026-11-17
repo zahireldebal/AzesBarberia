@@ -19,7 +19,7 @@ Estado: **prototipo** (no publicado al público). Todo lo de abajo hay que resol
 | Dato | Estado | Archivo |
 |---|---|---|
 | Especialidad de cada barbero | No figura en ningún lado. Si se completa, aparece bajo el nombre. | `src/data/team.ts` (`specialty`) |
-| Calificación y reseñas de Google | No se capturaron. Hoy se muestra solo la de Fresha (5,0 · 1 reseña). | `src/data/business.ts` (`rating`) y `src/components/Reviews.tsx` |
+| Textos de reseñas de Google | La calificación (5,0 · 342 reseñas, desglose por estrellas y temas) se leyó del perfil público el 17/11/2026. Google no muestra el texto de las reseñas sin iniciar sesión: pedir al cliente 3 reseñas que le gusten y copiarlas tal cual. Actualizar los números cada tanto. | `src/data/reviews.ts` (`REVIEWS`) y `src/data/business.ts` (`rating`) |
 | Pasos de uso de la cera en polvo | Redactados a partir de "rápida absorción, sin necesidad de peine" (post de BRB). Confirmar con BRB. | `src/i18n/es.ts` y `en.ts` (`beforeAfter.steps`) |
 | Lautaro en la descripción de Fresha | La descripción del negocio en Fresha nombra solo a Álex, Benjamín, Emanuel y Federico. El cliente confirmó que son 5; conviene actualizar ese texto en Fresha. | Panel de Fresha (no el sitio) |
 | Dominio propio | `SITE_URL` apunta a `https://azesbarberia.netlify.app` (provisorio). | `src/data/business.ts` |

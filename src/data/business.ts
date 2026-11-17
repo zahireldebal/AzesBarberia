@@ -56,8 +56,11 @@ export const BUSINESS = {
   whatsapp: '59893874498',
   instagram: 'https://www.instagram.com/azesbarberia/',
   instagramHandle: '@azesbarberia',
-  /** Fresha public rating at the time of capture (2026-11-14). */
-  rating: { value: 5, count: 1, source: 'Fresha' },
+  /**
+   * Google Maps rating, read from the public listing on 2026-11-17.
+   * `breakdown` = number of reviews per star (5 → 1). Update by hand when it changes.
+   */
+  rating: { value: 5, count: 342, source: 'Google', breakdown: { 5: 338, 4: 3, 3: 0, 2: 0, 1: 1 } },
   /** 24h, Monday = 1 ... Sunday = 7. Closed days are omitted. */
   hours: [
     { day: 1, open: '09:00', close: '19:00' },
@@ -70,6 +73,14 @@ export const BUSINESS = {
   payments: ['cash', 'credit', 'debit'] as const,
   walkIns: true,
 } as const;
+
+/** Google Maps listing of the shop (place ID verified 2026-11-17: "Azes Barberia, Sarandí 650"). */
+export const GOOGLE_PLACE_ID = 'ChIJyQMy2OobdZURiZ2eQpqLS3c';
+const GOOGLE_FID = '0x95751bead83203c9:0x774b8b9a429e9d89';
+/** Opens the listing straight on its Reviews tab (tested 2026-11-17; the `16s` part is required). */
+export const GOOGLE_REVIEWS_URL = `https://www.google.com/maps/place/Azes+Barberia/@-34.9118461,-54.9575174,17z/data=!4m8!3m7!1s${GOOGLE_FID}!8m2!3d-34.9118461!4d-54.9575174!9m1!1b1!16s%2Fg%2F11sgs7403j`;
+/** Opens Google's "write a review" dialog for the shop. */
+export const GOOGLE_WRITE_REVIEW_URL = `https://search.google.com/local/writereview?placeid=${GOOGLE_PLACE_ID}`;
 
 export const MAPS_DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&destination=${BUSINESS.geo.lat},${BUSINESS.geo.lng}`;
 export const MAPS_EMBED_URL = `https://maps.google.com/maps?q=${BUSINESS.geo.lat},${BUSINESS.geo.lng}&z=17&output=embed`;

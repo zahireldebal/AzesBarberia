@@ -9,7 +9,7 @@ export function Location({ t }: { t: Dict }) {
   const byDay = new Map<number, { open: string; close: string }>(BUSINESS.hours.map((h) => [h.day, h]));
 
   return (
-    <section id="local" className="section" aria-labelledby="local-title">
+    <section id="local" className="section bg-ink-2" aria-labelledby="local-title">
       <div className="wrap">
         <SectionHead id="local-title" title={t.location.title} intro={t.location.lead} />
 

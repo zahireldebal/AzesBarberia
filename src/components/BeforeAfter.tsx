@@ -14,7 +14,7 @@ export function BeforeAfter({ t, lang }: { t: Dict; lang: Lang }) {
   const ba = t.beforeAfter;
 
   return (
-    <section id="antes-despues" className="section" aria-labelledby="antes-despues-title">
+    <section id="antes-despues" className="section bg-ink-2" aria-labelledby="antes-despues-title">
       <div className="wrap">
         <SectionHead id="antes-despues-title" title={ba.title} intro={ba.intro} />
 

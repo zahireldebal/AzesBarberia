@@ -22,7 +22,7 @@ export function Products({ t, lang }: { t: Dict; lang: Lang }) {
   const items = withImage.map((p) => ({ name: p.image!, alt: p.imageAlt?.[lang] ?? '', caption: `${p.brand} ${p.name}` }));
 
   return (
-    <section id="productos" className="section bg-ink-2" aria-labelledby="productos-title">
+    <section id="productos" className="section" aria-labelledby="productos-title">
       <div className="wrap">
         <SectionHead id="productos-title" title={t.products.title} intro={t.products.intro} />
 
