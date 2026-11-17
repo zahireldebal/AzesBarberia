@@ -21,8 +21,8 @@ export function Header({ t, bookHref, homeHref, altLangHref }: Props) {
   const links = [
     ['#equipo', t.nav.team],
     ['#servicios', t.nav.services],
-    ['#local', t.nav.location],
     ['#productos', t.nav.products],
+    ['#local', t.nav.location],
     ['#preguntas', t.nav.faq],
   ] as const;
   const leftLinks = links.slice(0, 3);

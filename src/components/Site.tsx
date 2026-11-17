@@ -83,11 +83,11 @@ export function Site({ t, lang }: { t: Dict; lang: Lang }) {
         {/* The barbers come first: people pick who cuts them before what */}
         <Team t={t} lang={lang} />
         <Services t={t} lang={lang} bookHref={bookHref} />
-        <Reviews t={t} lang={lang} />
-        {/* The room is the shop's strongest picture: shown early */}
-        <Location t={t} />
+        {/* BRB products and their before/after sit together, above the reviews */}
         <Products t={t} lang={lang} />
         <BeforeAfter t={t} lang={lang} />
+        <Reviews t={t} lang={lang} />
+        <Location t={t} />
         <FaqSection t={t} lang={lang} />
       </main>
       <Footer t={t} bookHref={bookHref} />
