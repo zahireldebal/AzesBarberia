@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Next.js (App Router) + TypeScript + Tailwind CSS, static export (`output: 'export'`) deployed on Netlify. Framer Motion for motion (respects `prefers-reduced-motion`). Images pre-processed with `sharp` to WebP at several widths with a custom `srcset` in `/public/img/`. No backend or database: content lives in `src/data/*.ts`, copy in `src/i18n/es.ts` and `en.ts`. Repo: github.com/zahireldebal/AzesBarberia.
+Next.js (App Router) + TypeScript + Tailwind CSS, static export (`output: 'export'`) deployed on Cloudflare Workers (static assets, `wrangler.jsonc`). Framer Motion for motion (respects `prefers-reduced-motion`). Images pre-processed with `sharp` to WebP at several widths with a custom `srcset` in `/public/img/`. No backend or database: content lives in `src/data/*.ts`, copy in `src/i18n/es.ts` and `en.ts`. Repo: github.com/zahireldebal/AzesBarberia.
 
 ## Users
 

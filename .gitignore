@@ -34,3 +34,6 @@ Thumbs.db
 # impeccable engine binary (re-downloaded on demand) and hook cache
 .claude/skills/impeccable/scripts/bin/
 .impeccable/hook.cache.json
+
+# Cloudflare Wrangler local state
+.wrangler/

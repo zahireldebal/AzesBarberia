@@ -22,11 +22,11 @@ Estado: **prototipo** (no publicado al público). Todo lo de abajo hay que resol
 | Textos de reseñas de Google | La calificación (5,0 · 342 reseñas, desglose por estrellas y temas) se leyó del perfil público el 17/11/2026. Google no muestra el texto de las reseñas sin iniciar sesión: pedir al cliente 3 reseñas que le gusten y copiarlas tal cual. Actualizar los números cada tanto. | `src/data/reviews.ts` (`REVIEWS`) y `src/data/business.ts` (`rating`) |
 | Pasos de uso de la cera en polvo | Redactados a partir de "rápida absorción, sin necesidad de peine" (post de BRB). Confirmar con BRB. | `src/i18n/es.ts` y `en.ts` (`beforeAfter.steps`) |
 | Lautaro en la descripción de Fresha | La descripción del negocio en Fresha nombra solo a Álex, Benjamín, Emanuel y Federico. El cliente confirmó que son 5; conviene actualizar ese texto en Fresha. | Panel de Fresha (no el sitio) |
-| Dominio propio | `SITE_URL` apunta a `https://azesbarberia.netlify.app` (provisorio). | `src/data/business.ts` |
+| Dominio propio | `SITE_URL` apunta a `https://azesbarberia.zahireldebal.workers.dev` (provisorio, Cloudflare Workers). | `src/data/business.ts` |
 
 ## Rendimiento
 
-- Lighthouse local (build estático servido con `serve`): escritorio 99 / 100 / 100 / 100. En mobile, accesibilidad, buenas prácticas y SEO dan 100, y rendimiento varía entre 80 y 90 según la corrida (LCP simulado ~3,2–3,7 s). Volver a medir sobre la URL de Netlify, que sirve más rápido que el servidor local.
+- Lighthouse local (build estático servido con `serve`): escritorio 99 / 100 / 100 / 100. En mobile, accesibilidad, buenas prácticas y SEO dan 100, y rendimiento varía entre 80 y 90 según la corrida (LCP simulado ~3,2–3,7 s). Volver a medir sobre la URL de Cloudflare, que sirve más rápido que el servidor local.
 
 ## Fresha
 

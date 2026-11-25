@@ -1,0 +1,20 @@
+# Cloudflare Workers static assets: headers for every response.
+# CSP notes: the static export uses inline scripts/styles (Next.js runtime, JSON-LD,
+# motion script), so no nonces are possible. Images and fonts are self-hosted;
+# data: covers the CSS grain texture. The only third-party content loaded is the
+# Google Maps iframe (after a click). Fresha, WhatsApp, Instagram and Google
+# reviews are plain links, which the CSP does not restrict.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
+  X-Frame-Options: SAMEORIGIN
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; frame-src https://maps.google.com https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests
+
+# Processed photos and hashed Next.js assets never change at the same URL.
+/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable

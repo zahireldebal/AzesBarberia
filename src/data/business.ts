@@ -4,7 +4,7 @@
 export type Lang = 'es' | 'en';
 
 /** Public URL of the site (change to the custom domain when there is one). */
-export const SITE_URL = 'https://azesbarberia.netlify.app';
+export const SITE_URL = 'https://azesbarberia.zahireldebal.workers.dev';
 
 /**
  * Fresha booking page (Spanish). The ONLY place the Fresha link is stored.

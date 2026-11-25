@@ -2,7 +2,7 @@
 
 Sitio one-page de Azes Barbería (Maldonado, Uruguay), en español y en inglés. Las reservas se hacen en **Fresha**: el sitio solo enlaza a Fresha, nunca la reemplaza ni la embebe.
 
-Stack: Next.js (App Router) + TypeScript + Tailwind CSS + Framer Motion, exportado como sitio estático (`out/`) y desplegado en Netlify.
+Stack: Next.js (App Router) + TypeScript + Tailwind CSS + Framer Motion, exportado como sitio estático (`out/`) y publicado en **Cloudflare Workers** (static assets).
 
 ## Correrlo
 
@@ -52,12 +52,18 @@ Para cambiar o agregar una foto:
 4. Usá el nombre en el archivo de datos correspondiente (por ejemplo `products.ts`).
 5. Commiteá `public/img/` y `src/data/images.generated.json`.
 
-## Desplegar en Netlify
+## Desplegar en Cloudflare Workers
 
-1. En Netlify: **Add new site → Import an existing project → GitHub** y elegí `zahireldebal/AzesBarberia`.
-2. Netlify lee `netlify.toml`: build `npm run build`, carpeta `out`, Node 22. No hay que configurar nada más.
-3. Cada push a `main` despliega solo.
-4. Cuando haya dominio propio, cambiá `SITE_URL` en `src/data/business.ts`.
+El sitio es 100 % estático: Cloudflare solo sirve la carpeta `out/` (config en `wrangler.jsonc`, proyecto `azesbarberia`).
+
+1. En Cloudflare: **Workers & Pages → Create → Import a repository** y elegí `zahireldebal/AzesBarberia`.
+2. Build command: `npm run build` · Deploy command: `npx wrangler deploy`. Node 22 sale de `.node-version`.
+3. No hay variables de entorno que cargar.
+4. Cada push a `main` despliega solo. URL provisoria: https://azesbarberia.zahireldebal.workers.dev
+5. Headers (seguridad, CSP y caché) en `public/_headers`. Si hiciera falta redirigir algo, va en `public/_redirects`.
+6. Cuando haya dominio propio, cambiá `SITE_URL` en `src/data/business.ts` (canonical, hreflang, sitemap, robots y Open Graph salen de ahí).
+
+Probar la configuración sin publicar: `npm run build && npx wrangler deploy --dry-run`.
 
 ## Pendientes
 
