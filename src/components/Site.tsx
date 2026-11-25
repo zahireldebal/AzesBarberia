@@ -1,5 +1,5 @@
 import type { Dict } from '@/i18n/es';
-import { BUSINESS, GOOGLE_REVIEWS_URL, SITE_URL, bookingUrl, type Lang } from '@/data/business';
+import { BUSINESS, GOOGLE_REVIEWS_URL, SITE_URL, bookingUrl, localePath, type Lang } from '@/data/business';
 import { SERVICES } from '@/data/services';
 import { Header } from './Header';
 import { Hero } from './Hero';
@@ -15,7 +15,7 @@ import { MobileBar } from './MobileBar';
 import { MotionProvider } from './MotionProvider';
 
 function jsonLd(lang: Lang, t: Dict) {
-  const url = lang === 'es' ? `${SITE_URL}/` : `${SITE_URL}/en/`;
+  const url = `${SITE_URL}${localePath(lang)}`;
   return {
     '@context': 'https://schema.org',
     '@type': ['HairSalon', 'LocalBusiness'],
@@ -71,13 +71,12 @@ function jsonLd(lang: Lang, t: Dict) {
 
 export function Site({ t, lang }: { t: Dict; lang: Lang }) {
   const bookHref = bookingUrl(lang);
-  const homeHref = lang === 'es' ? '/' : '/en/';
-  const altLangHref = lang === 'es' ? '/en/' : '/';
+  const homeHref = localePath(lang);
 
   return (
     <MotionProvider>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd(lang, t)) }} />
-      <Header t={t} bookHref={bookHref} homeHref={homeHref} altLangHref={altLangHref} />
+      <Header t={t} bookHref={bookHref} homeHref={homeHref} />
       <main id="contenido">
         <Hero t={t} bookHref={bookHref} />
         {/* The barbers come first: people pick who cuts them before what */}

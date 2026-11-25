@@ -6,11 +6,19 @@ import type { Dict } from '@/i18n/es';
 import { BookLink } from './BookLink';
 import { Close, MenuIcon } from './Icons';
 import { SuitRule } from './Suits';
-import { FlagUS, FlagUY } from './Flags';
+import { FlagBR, FlagUS, FlagUY } from './Flags';
+import { localePath } from '@/data/business';
 
-type Props = { t: Dict; bookHref: string; homeHref: string; altLangHref: string };
+type Props = { t: Dict; bookHref: string; homeHref: string };
 
-export function Header({ t, bookHref, homeHref, altLangHref }: Props) {
+/** Language switcher entries: code, native name, hreflang, flag. */
+const LANG_LINKS = [
+  ['es', 'Español', 'es', FlagUY],
+  ['en', 'English', 'en', FlagUS],
+  ['pt', 'Português', 'pt-BR', FlagBR],
+] as const;
+
+export function Header({ t, bookHref, homeHref }: Props) {
   const [compact, setCompact] = useState(false);
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
@@ -124,17 +132,14 @@ export function Header({ t, bookHref, homeHref, altLangHref }: Props) {
             <div className="flex items-center gap-2">
               {/* One flag per language; the active one is full opacity with a gold outline */}
               <ul className="flex items-center" aria-label={t.nav.langSwitchLabel}>
-                {([
-                  ['es', 'Español', t.lang === 'es' ? homeHref : altLangHref, FlagUY],
-                  ['en', 'English', t.lang === 'en' ? homeHref : altLangHref, FlagUS],
-                ] as const).map(([code, name, href, Flag]) => {
+                {LANG_LINKS.map(([code, name, hreflang, Flag]) => {
                   const active = t.lang === code;
                   return (
                     <li key={code}>
                       <a
-                        href={href}
-                        hrefLang={code}
-                        lang={code}
+                        href={localePath(code)}
+                        hrefLang={hreflang}
+                        lang={hreflang}
                         title={name}
                         aria-label={name}
                         aria-current={active ? 'true' : undefined}

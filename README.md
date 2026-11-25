@@ -1,6 +1,6 @@
 # Azes Barbería: sitio webb
 
-Sitio one-page de Azes Barbería (Maldonado, Uruguay), en español y en inglés. Las reservas se hacen en **Fresha**: el sitio solo enlaza a Fresha, nunca la reemplaza ni la embebe.
+Sitio one-page de Azes Barbería (Maldonado, Uruguay), en español, inglés (`/en/`) y portugués (`/pt/`). Las reservas se hacen en **Fresha**: el sitio solo enlaza a Fresha, nunca la reemplaza ni la embebe.
 
 Stack: Next.js (App Router) + TypeScript + Tailwind CSS + Framer Motion, exportado como sitio estático (`out/`) y publicado en **Cloudflare Workers** (static assets).
 
@@ -26,7 +26,7 @@ npm start          # sirve out/ para probar el build
 | Productos | `src/data/products.ts` |
 | Antes/después de un producto | `src/data/products.ts` → `showcase` (fotos, textos y pasos) |
 | Preguntas frecuentes | `src/data/faq.ts` |
-| Cualquier texto del sitio | `src/i18n/es.ts` (español) y `src/i18n/en.ts` (inglés) |
+| Cualquier texto del sitio | `src/i18n/es.ts` (español), `src/i18n/en.ts` (inglés) y `src/i18n/pt.ts` (portugués) |
 | URL pública del sitio (SEO, sitemap) | `src/data/business.ts` → `SITE_URL` |
 
 ### Links de Fresha
@@ -37,6 +37,7 @@ npm start          # sirve out/ para probar el build
 - un servicio preseleccionado: `…/booking?offerItemId=s:<id del servicio>&pId=560997`
 - un barbero preseleccionado: `…/booking?employeeId=<id del barbero>&pId=560997`
 - inglés: la misma ruta sin `/es/`
+- portugués: la misma ruta con `/pt/`
 
 Los IDs de servicios y barberos están en `services.ts` y `team.ts` (`freshaId`). Si se crea un servicio nuevo en Fresha, su ID aparece en la página pública de Fresha del negocio.
 

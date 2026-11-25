@@ -77,7 +77,7 @@ export function Reviews({ t, lang }: { t: Dict; lang: Lang }) {
               <li key={rv.author + i} className="reveal flex flex-col border border-line bg-ink-2 p-6" style={{ '--i': i } as React.CSSProperties}>
                 <Stars n={rv.stars} className="text-base" />
                 <blockquote className="mt-4 flex-1 text-[0.98rem] leading-relaxed text-cream/90">
-                  “{lang === 'en' && rv.textEn ? rv.textEn : rv.text}”
+                  “{(lang === 'en' && rv.textEn) || (lang === 'pt' && rv.textPt) || rv.text}”
                 </blockquote>
                 <p className="mt-5 text-[0.85rem] font-semibold uppercase tracking-[0.12em] text-muted">
                   {rv.author}{rv.when ? <span className="font-normal normal-case tracking-normal"> · {rv.when}</span> : null}

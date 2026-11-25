@@ -2,6 +2,7 @@
 // preselected. Photos are their Fresha profile pictures.
 // `haircutFrom` = their price for "Corte de pelo" as shown on Fresha.
 // Specialties are not published anywhere yet: add them here when confirmed.
+import type { Localized } from './business';
 
 export type Barber = {
   id: string;
@@ -9,7 +10,7 @@ export type Barber = {
   freshaId: string;
   image: string;
   haircutFrom: number;
-  specialty?: { es: string; en: string };
+  specialty?: Localized;
 };
 
 export const TEAM: Barber[] = [

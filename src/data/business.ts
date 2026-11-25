@@ -1,7 +1,21 @@
 // All business facts live here. Edit this file to change contact data,
 // hours or the Fresha link; every button on the site reads from it.
 
-export type Lang = 'es' | 'en';
+export type Lang = 'es' | 'en' | 'pt';
+
+/** One value per language. TypeScript flags any text missing a translation. */
+export type Localized<T = string> = Record<Lang, T>;
+
+/** Every language the site is published in, in selector order. */
+export const LANGS: Lang[] = ['es', 'en', 'pt'];
+
+/** Path of each language version (Spanish is the root). */
+export function localePath(lang: Lang): string {
+  return lang === 'es' ? '/' : `/${lang}/`;
+}
+
+/** Fresha path prefix per language: Spanish /es/, Portuguese /pt/, English has none. */
+const FRESHA_PREFIX: Record<Lang, string> = { es: '/es/', en: '/', pt: '/pt/' };
 
 /** Public URL of the site (change to the custom domain when there is one). */
 export const SITE_URL = 'https://azesbarberia.zahireldebal.workers.dev';
@@ -20,13 +34,14 @@ export const FRESHA_PROFILE_URL = FRESHA_BOOKING_URL.replace(/\/booking\?.*$/, '
 /**
  * Builds a Fresha link.
  * - EN: Fresha serves English without a language prefix (/en/ redirects there).
+ * - PT: /pt/ (the client's original share link used it; returns 200).
  * - service: Fresha `offerItemId=s:<id>` opens that service preselected.
  * - barber: Fresha `employeeId=<id>` opens the menu with that barber preselected.
  * Both formats were tested in a real browser on 2026-11-14.
  */
 export function bookingUrl(lang: Lang, opts: { serviceId?: string; barberId?: string } = {}): string {
   const url = new URL(FRESHA_BOOKING_URL);
-  if (lang === 'en') url.pathname = url.pathname.replace(/^\/es\//, '/');
+  url.pathname = url.pathname.replace(/^\/es\//, FRESHA_PREFIX[lang]);
   const pId = url.searchParams.get('pId') ?? '';
   url.search = '';
   if (opts.serviceId) url.searchParams.set('offerItemId', `s:${opts.serviceId}`);
@@ -37,7 +52,7 @@ export function bookingUrl(lang: Lang, opts: { serviceId?: string; barberId?: st
 }
 
 export function profileUrl(lang: Lang): string {
-  return lang === 'en' ? FRESHA_PROFILE_URL.replace('/es/', '/') : FRESHA_PROFILE_URL;
+  return FRESHA_PROFILE_URL.replace('/es/', FRESHA_PREFIX[lang]);
 }
 
 export const BUSINESS = {

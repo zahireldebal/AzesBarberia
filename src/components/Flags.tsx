@@ -14,6 +14,17 @@ export function FlagUY({ className }: { className?: string }) {
   );
 }
 
+export function FlagBR({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 20 14" className={className} aria-hidden>
+      <rect width="20" height="14" fill="#009C3B" />
+      <polygon points="10,1.7 18.3,7 10,12.3 1.7,7" fill="#FFDF00" />
+      <circle cx="10" cy="7" r="3.5" fill="#002776" />
+      <path d="M6.6 6.2 Q10 5.3 13.4 7.4" fill="none" stroke="#fff" strokeWidth="0.55" />
+    </svg>
+  );
+}
+
 export function FlagUS({ className }: { className?: string }) {
   const stars: [number, number][] = [];
   for (let r = 0; r < 5; r++) for (let c = 0; c < (r % 2 ? 5 : 6); c++) stars.push([1.2 + c * 2 + (r % 2), 1.1 + r * 1.9]);

@@ -32,7 +32,7 @@ A large, recently opened shop in central Maldonado (Sarandí 650, esquina 33) wi
 
 ## Capabilities and Constraints
 
-- Language: Spanish (rioplatense, voseo) by default, English toggle.
+- Languages: Spanish (rioplatense, voseo) by default, English (/en/) and Brazilian Portuguese (/pt/) via the flag switcher.
 - Mobile-first (375 px) and desktop; WCAG AA contrast, visible focus, keyboard navigation, 44 px targets.
 - Lighthouse > 90 in all four categories.
 - Never invent services, prices, products, reviews, barbers or facts; unknowns are `[CONFIRMAR]` and tracked in PENDIENTES.md.
