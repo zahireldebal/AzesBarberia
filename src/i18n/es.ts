@@ -19,7 +19,7 @@ const es = {
     menuMore: 'Más secciones',
     close: 'Cerrar',
     langSwitch: 'English',
-    langSwitchLabel: 'Ver el sitio en inglés',
+    langSwitchLabel: 'Idioma',
   },
   book: {
     primary: 'Reservá en Fresha',

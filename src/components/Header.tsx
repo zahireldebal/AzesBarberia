@@ -6,6 +6,7 @@ import type { Dict } from '@/i18n/es';
 import { BookLink } from './BookLink';
 import { Close, MenuIcon } from './Icons';
 import { SuitRule } from './Suits';
+import { FlagUS, FlagUY } from './Flags';
 
 type Props = { t: Dict; bookHref: string; homeHref: string; altLangHref: string };
 
@@ -121,14 +122,32 @@ export function Header({ t, bookHref, homeHref, altLangHref }: Props) {
               </ul>
             </nav>
             <div className="flex items-center gap-2">
-              <a
-                href={altLangHref}
-                hrefLang={t.lang === 'es' ? 'en' : 'es'}
-                aria-label={t.nav.langSwitchLabel}
-                className="inline-flex min-h-11 min-w-11 items-center justify-center px-2 text-[0.8rem] font-bold tracking-[0.14em] text-cream/85 no-underline hover:text-gold-hi"
-              >
-                {t.lang === 'es' ? 'EN' : 'ES'}
-              </a>
+              {/* One flag per language; the active one is full opacity with a gold outline */}
+              <ul className="flex items-center" aria-label={t.nav.langSwitchLabel}>
+                {([
+                  ['es', 'Español', t.lang === 'es' ? homeHref : altLangHref, FlagUY],
+                  ['en', 'English', t.lang === 'en' ? homeHref : altLangHref, FlagUS],
+                ] as const).map(([code, name, href, Flag]) => {
+                  const active = t.lang === code;
+                  return (
+                    <li key={code}>
+                      <a
+                        href={href}
+                        hrefLang={code}
+                        lang={code}
+                        title={name}
+                        aria-label={name}
+                        aria-current={active ? 'true' : undefined}
+                        className={`group inline-flex min-h-11 min-w-9 items-center justify-center px-1 transition-opacity ${active ? 'opacity-100' : 'opacity-45 hover:opacity-90 focus-visible:opacity-100'}`}
+                      >
+                        <span className={`block overflow-hidden rounded-[3px] ${active ? 'ring-1 ring-gold-hi ring-offset-2 ring-offset-ink' : ''}`}>
+                          <Flag className="block h-[15px] w-[22px]" />
+                        </span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
               <BookLink href={bookHref} newTabLabel={t.book.newTab} className="btn btn-gold btn-sm hidden sm:inline-flex">
                 {t.book.short}
               </BookLink>

@@ -21,7 +21,7 @@ const en: Dict = {
     menuMore: 'More sections',
     close: 'Close',
     langSwitch: 'Español',
-    langSwitchLabel: 'View the site in Spanish',
+    langSwitchLabel: 'Language',
   },
   book: {
     primary: 'Book on Fresha',
