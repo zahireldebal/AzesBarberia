@@ -19,7 +19,7 @@ export function Footer({ t, bookHref }: { t: Dict; bookHref: string }) {
       <div className="wrap">
         <div className="flex flex-col items-center text-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/img/logo-light-640.webp" alt="Azes Barbería" width={640} height={557} loading="lazy" className="h-auto w-56" />
+          <img src="/img/logo-dark-640.webp" alt="Azes Barbería" width={640} height={557} loading="lazy" className="h-auto w-56" />
           <SuitRule className="mt-8 w-full max-w-md" />
           <BookLink href={bookHref} newTabLabel={t.book.newTab} className="btn btn-gold mt-8">{t.book.primary}</BookLink>
         </div>

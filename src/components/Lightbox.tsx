@@ -77,7 +77,7 @@ export function Lightbox({ group, items, index, onChange, labels }: Props) {
           role="dialog"
           aria-modal="true"
           aria-label={labels.dialog}
-          className="fixed inset-0 z-[70] flex flex-col bg-ink/95"
+          className="theme-dark fixed inset-0 z-[70] flex flex-col bg-ink/95"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

@@ -140,7 +140,7 @@ export function CompareSlider({ before, after, beforeAlt, afterAlt, labels }: Pr
   };
 
   const labelClass =
-    'pointer-events-none absolute top-4 z-10 bg-ink/80 px-3 py-1.5 font-display text-[0.8rem] uppercase tracking-[0.14em] text-cream';
+    'pointer-events-none absolute top-4 z-10 bg-black/70 px-3 py-1.5 font-display text-[0.8rem] uppercase tracking-[0.14em] text-white';
 
   return (
     <div>
@@ -175,7 +175,7 @@ export function CompareSlider({ before, after, beforeAlt, afterAlt, labels }: Pr
           className="pointer-events-none absolute inset-y-0 left-0 z-20 w-0 [transform:translateZ(0)]"
           style={{ left: 'calc(var(--p) * 1%)' }}
         >
-          <span className="absolute inset-y-0 -left-px w-0.5 bg-cream shadow-[0_0_12px_rgb(0_0_0/0.6)]" />
+          <span className="absolute inset-y-0 -left-px w-0.5 bg-white shadow-[0_0_10px_rgb(0_0_0/0.45)]" />
           <span
             ref={knob}
             role="slider"
@@ -188,8 +188,8 @@ export function CompareSlider({ before, after, beforeAlt, afterAlt, labels }: Pr
             onKeyDown={onKeyDown}
             className={`pointer-events-auto absolute left-0 top-1/2 flex size-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center outline-none transition-transform duration-300 ease-[var(--ease-out-expo)] focus-visible:[&>span]:ring-2 focus-visible:[&>span]:ring-cream ${dragging ? 'scale-110' : 'hover:scale-105'}`}
           >
-            <span className="absolute size-9 rotate-45 bg-gold shadow-[0_6px_18px_-4px_rgb(0_0_0/0.8)]" aria-hidden />
-            <svg viewBox="0 0 24 24" className="relative size-5 text-ink" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <span className="absolute size-9 rotate-45 bg-black ring-1 ring-white/70 shadow-[0_6px_18px_-4px_rgb(0_0_0/0.6)]" aria-hidden />
+            <svg viewBox="0 0 24 24" className="relative size-5 text-white" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="m9 7-5 5 5 5M15 7l5 5-5 5" />
             </svg>
           </span>

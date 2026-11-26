@@ -12,7 +12,7 @@ export function Hero({ t, bookHref }: Props) {
   const rating = BUSINESS.rating.value.toLocaleString(t.locale, { minimumFractionDigits: 1 });
 
   return (
-    <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden" aria-labelledby="hero-title">
+    <section className="theme-dark relative isolate flex min-h-[100svh] flex-col overflow-hidden md:min-h-[104svh]" aria-labelledby="hero-title">
       {/* The shop floor under the hexagonal light ceiling: the most recognisable
           view of Azes. The picture bleeds 3% past each side to hide the thin dark
           edge left by the source capture. */}
@@ -27,20 +27,15 @@ export function Hero({ t, bookHref }: Props) {
           alt={t.hero.imageAlt}
           fetchPriority="high"
           decoding="sync"
-          className="hero-img size-full object-cover object-[45%_30%] md:object-[50%_34%] [filter:saturate(0.85)_contrast(1.08)_brightness(0.9)]"
+          className="hero-img size-full object-cover object-[45%_30%] md:object-[50%_34%]"
         />
       </picture>
       <div aria-hidden className="grain absolute inset-0 -z-20" />
-      {/* Scrim: the room is white, so it needs more ink than the façade did.
-          A centred pool of dark holds the logo; the bottom melts into the page. */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(14_14_15/0.7)_0%,rgb(14_14_15/0.5)_28%,rgb(14_14_15/0.86)_60%,#0e0e0f_100%)] md:bg-[radial-gradient(ellipse_55%_50%_at_50%_50%,rgb(14_14_15/0.8),rgb(14_14_15/0.5)_70%,rgb(14_14_15/0.62)),linear-gradient(180deg,rgb(14_14_15/0.3)_0%,transparent_22%,transparent_62%,#0e0e0f_100%)]"
-      />
-      {/* A faint violet glow echoes the neon of the mirrors */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-[radial-gradient(ellipse_70%_60%_at_50%_100%,rgb(124_92_255/0.12),transparent_70%)]" />
+      {/* Scrim: dark over the photo so the logo and text read, then the bottom
+          fades through grey into the light band of the next section. */}
+      <div aria-hidden className="hero-shade absolute inset-0 -z-10" />
 
-      <div className="hero-fade wrap flex flex-1 flex-col items-center justify-end pb-28 pt-28 text-center sm:pb-20 md:justify-center md:pb-16">
+      <div className="hero-fade wrap flex flex-1 flex-col items-center justify-end pb-36 pt-28 text-center sm:pb-36 md:justify-center md:pb-44">
         <h1 id="hero-title" className="w-[min(78vw,26rem)] md:w-[30rem]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

@@ -1,16 +1,18 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-ink: #0e0e0f;
-  --color-ink-2: #18181b;
-  --color-ink-3: #1d1d20;
-  --color-line: #2c2a27;
-  --color-cream: #f3ede1;
-  --color-muted: #b9b1a3;
-  --color-gold: #b08d57;
-  --color-gold-hi: #c9a46c;
-  --color-gold-lo: #8a6c40;
-  --color-suit: #c9090a;
+  /* "Papel": paper ground and black ink. Names are kept from the first
+     theme: ink = ground, cream = text, gold = the action colour (black). */
+  --color-ink: #fafaf8;
+  --color-ink-2: #efefec;
+  --color-ink-3: #e5e5e1;
+  --color-line: #d9d9d5;
+  --color-cream: #0b0b0b;
+  --color-muted: #5a5a5a;
+  --color-gold: #0b0b0b;
+  --color-gold-hi: #2b2b2b;
+  --color-gold-lo: #9a9a9a;
+  --color-suit: #0b0b0b;
 
   --font-display: var(--font-cinzel), 'Times New Roman', serif;
   --font-sans: var(--font-manrope), system-ui, sans-serif;
@@ -18,10 +20,29 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Dark areas: the same tokens, night values. */
+.theme-dark {
+  --color-ink: #0a0a0a;
+  --color-ink-2: #141414;
+  --color-ink-3: #1c1c1c;
+  --color-line: #2a2a2a;
+  --color-cream: #f5f5f5;
+  --color-muted: #b8b8b8;
+  --color-gold: #ffffff;
+  --color-gold-hi: #e6e6e6;
+  --color-gold-lo: #8a8a8a;
+  --color-suit: #f5f5f5;
+  --shadow-strong: rgb(0 0 0 / 0.8);
+  color-scheme: dark;
+}
+
 @layer base {
   :root {
     interpolate-size: allow-keywords;
-    color-scheme: dark;
+    color-scheme: light;
+    /* the hero melts into the page ground (first section after it) */
+    --hero-fade-to: #fafaf8;
+    --shadow-strong: rgb(0 0 0 / 0.22);
     scroll-padding-top: 5rem;
   }
   html {
@@ -109,30 +130,30 @@
   .btn-gold {
     background: var(--color-gold);
     color: var(--color-ink);
-    box-shadow: 0 6px 18px -8px rgb(0 0 0 / 0.7);
+    box-shadow: 0 6px 18px -8px var(--shadow-strong);
   }
-  .btn-gold:hover { background: var(--color-gold-hi); box-shadow: 0 12px 26px -10px rgb(0 0 0 / 0.8), 0 0 0 1px rgb(201 164 108 / 0.4); }
+  .btn-gold:hover { background: var(--color-gold-hi); box-shadow: 0 12px 26px -10px var(--shadow-strong), 0 0 0 1px color-mix(in srgb, var(--color-gold) 40%, transparent); }
   /* a light sweep crosses the gold button on hover */
   .btn-gold::after {
     content: '';
     position: absolute;
     inset: -2px auto -2px -60%;
     width: 45%;
-    background: linear-gradient(100deg, transparent, rgb(255 250 235 / 0.55), transparent);
+    background: linear-gradient(100deg, transparent, color-mix(in srgb, var(--color-ink) 55%, transparent), transparent);
     transform: skewX(-18deg);
     pointer-events: none;
     z-index: -1;
   }
   .btn-gold:hover::after { animation: shine 900ms var(--ease-out-expo); }
   .btn-cream { background: var(--color-cream); color: var(--color-ink); }
-  .btn-cream:hover { background: #fffaf0; }
+  .btn-cream:hover { background: color-mix(in srgb, var(--color-cream) 85%, var(--color-ink)); }
   .btn-line {
-    border: 1px solid rgb(243 237 225 / 0.55);
+    border: 1px solid color-mix(in srgb, var(--color-cream) 55%, transparent);
     color: var(--color-cream);
   }
   /* outline buttons fill from the left on hover */
   .btn-line {
-    background-image: linear-gradient(rgb(243 237 225 / 0.1), rgb(243 237 225 / 0.1));
+    background-image: linear-gradient(color-mix(in srgb, var(--color-cream) 8%, transparent), color-mix(in srgb, var(--color-cream) 8%, transparent));
     background-repeat: no-repeat;
     background-size: 0% 100%;
     transition: transform 220ms var(--ease-out-expo), background-size 420ms var(--ease-out-expo), border-color 220ms, color 220ms;
@@ -147,7 +168,7 @@
     flex: 1;
     min-width: 1.5rem;
     margin-inline: 0.6rem;
-    border-bottom: 1px dotted rgb(176 141 87 / 0.55);
+    border-bottom: 1px dotted color-mix(in srgb, var(--color-cream) 40%, transparent);
     transform: translateY(-0.35em);
     transition: border-color 300ms;
   }
@@ -158,15 +179,15 @@
     content: '';
     position: absolute;
     inset: 0 -1rem;
-    background: radial-gradient(60% 120% at 0% 50%, rgb(176 141 87 / 0.1), transparent 70%);
+    background: radial-gradient(60% 120% at 0% 50%, color-mix(in srgb, var(--color-cream) 6%, transparent), transparent 70%);
     opacity: 0;
     transition: opacity 400ms var(--ease-out-expo);
     pointer-events: none;
   }
   .board-row:hover::before { opacity: 1; }
   .board-row h3 { transition: transform 400ms var(--ease-out-expo), color 300ms; }
-  .board-row:hover h3 { transform: translateX(6px); color: #fff; }
-  .board-row:hover .leader { border-bottom-style: solid; border-color: rgb(201 164 108 / 0.8); }
+  .board-row:hover h3 { transform: translateX(6px); color: var(--color-cream); }
+  .board-row:hover .leader { border-bottom-style: solid; border-color: var(--color-cream); }
 
   /* Nav link underline that grows from the centre */
   .nav-link { position: relative; }
@@ -187,15 +208,15 @@
   .lift { transition: transform 500ms var(--ease-out-expo); }
   .lift:hover { transform: translateY(-6px); }
   .lift .frame { transition: box-shadow 500ms var(--ease-out-expo); }
-  .lift:hover .frame { box-shadow: 0 24px 50px -24px rgb(0 0 0 / 0.95), 0 0 0 1px rgb(201 164 108 / 0.25); }
-  .lift:hover .frame::after { border-color: rgb(201 164 108 / 0.85); }
+  .lift:hover .frame { box-shadow: 0 24px 50px -24px var(--shadow-strong), 0 0 0 1px color-mix(in srgb, var(--color-cream) 18%, transparent); }
+  .lift:hover .frame::after { border-color: rgb(255 255 255 / 0.9); }
 
   /* Gold light that follows the pointer over a photo (vars set in Shell.tsx) */
   .spot-glow {
     position: absolute;
     inset: 0;
     z-index: 2;
-    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgb(201 164 108 / 0.35), transparent 65%);
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgb(255 255 255 / 0.4), transparent 65%);
     mix-blend-mode: soft-light;
     opacity: 0;
     transition: opacity 400ms;
@@ -209,7 +230,7 @@
     content: '';
     position: absolute;
     inset: 0.5rem;
-    border: 1px solid rgb(201 164 108 / 0.45);
+    border: 1px solid rgb(255 255 255 / 0.55);
     pointer-events: none;
   }
 
@@ -218,7 +239,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(100deg, transparent 30%, rgb(201 164 108 / 0.12) 50%, transparent 70%) 0 0 / 220% 100%;
+    background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--color-cream) 8%, transparent) 50%, transparent 70%) 0 0 / 220% 100%;
     animation: shimmer 1.4s linear infinite;
   }
   .frame:has(img.is-loaded)::before { animation: none; opacity: 0; }
@@ -254,7 +275,7 @@
     pointer-events: none;
     transform-origin: left;
     background: linear-gradient(90deg, var(--color-gold-lo), var(--color-gold-hi));
-    box-shadow: 0 0 10px rgb(201 164 108 / 0.6);
+    box-shadow: 0 0 8px rgb(0 0 0 / 0.25);
   }
   .progress-load { animation: load-bar 1.3s var(--ease-out-expo) forwards; }
   .progress-scroll { transform: scaleX(var(--scroll, 0)); opacity: 0.85; }
@@ -316,4 +337,33 @@
   mix-blend-mode: overlay;
   opacity: 0.32;
   pointer-events: none;
+}
+
+/* Photos are black and white in the files themselves (scripts/process-images.mjs,
+   MONO). Only the Google Maps iframe, which we cannot pre-process, gets a CSS filter. */
+
+/* Hero scrim: dark over the photo, then the bottom melts into the first light band. */
+.hero-shade {
+  background: linear-gradient(180deg,
+    rgb(0 0 0 / 0.68) 0%,
+    rgb(0 0 0 / 0.48) 28%,
+    rgb(0 0 0 / 0.82) 58%,
+    rgb(0 0 0 / 0.88) calc(100% - 9rem),
+    rgb(0 0 0 / 0.5) calc(100% - 4.5rem),
+    rgb(250 250 248 / 0.7) calc(100% - 1.5rem),
+    var(--hero-fade-to) 100%);
+}
+@media (min-width: 768px) {
+  .hero-shade {
+    background:
+      radial-gradient(ellipse 55% 50% at 50% 46%, rgb(0 0 0 / 0.78), rgb(0 0 0 / 0.5) 70%, rgb(0 0 0 / 0) 100%),
+      linear-gradient(180deg,
+        rgb(0 0 0 / 0.45) 0%,
+        rgb(0 0 0 / 0.3) 22%,
+        rgb(0 0 0 / 0.55) 62%,
+        rgb(0 0 0 / 0.7) calc(100% - 13rem),
+        rgb(0 0 0 / 0.3) calc(100% - 6rem),
+        rgb(250 250 248 / 0.75) calc(100% - 1.5rem),
+        var(--hero-fade-to) 100%);
+  }
 }

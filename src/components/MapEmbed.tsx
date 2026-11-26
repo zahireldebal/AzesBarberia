@@ -14,7 +14,7 @@ export function MapEmbed({ label, note, title }: { label: string; note: string; 
         <iframe
           src={MAPS_EMBED_URL}
           title={title}
-          className="absolute inset-0 size-full border-0 [filter:grayscale(0.6)_contrast(1.05)]"
+          className="absolute inset-0 size-full border-0 [filter:grayscale(1)_contrast(1.05)]"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
         />
@@ -22,7 +22,7 @@ export function MapEmbed({ label, note, title }: { label: string; note: string; 
         <button
           type="button"
           onClick={() => setShow(true)}
-          className="group absolute inset-0 flex flex-col items-center justify-end gap-3 pb-8 text-cream"
+          className="theme-dark group absolute inset-0 flex flex-col items-center justify-end gap-3 pb-8 text-cream"
         >
           {/* The corner itself, so the placeholder says "this is where we are"
               instead of looking like a map that failed to load. */}
@@ -30,7 +30,7 @@ export function MapEmbed({ label, note, title }: { label: string; note: string; 
             name="fachada"
             alt=""
             sizes="(min-width: 768px) 560px, 92vw"
-            className="absolute inset-0 size-full object-cover object-[50%_55%] grayscale-[40%] transition-transform duration-[1200ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.04]"
+            className="absolute inset-0 size-full object-cover object-[50%_55%] transition-transform duration-[1200ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.04]"
           />
           <span aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,rgb(14_14_15/0.25)_0%,rgb(14_14_15/0.35)_45%,rgb(14_14_15/0.92)_100%)]" />
           <Pin className="relative text-4xl text-gold-hi transition-transform duration-300 group-hover:-translate-y-1" />

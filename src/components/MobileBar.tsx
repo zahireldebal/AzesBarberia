@@ -22,7 +22,7 @@ export function MobileBar({ t, bookHref }: { t: Dict; bookHref: string }) {
 
   return (
     <div
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-gold/30 bg-ink/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-12px_30px_-12px_rgb(0_0_0/0.8)] transition-transform duration-500 ease-[var(--ease-out-expo)] lg:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-gold/30 bg-ink/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-12px_30px_-12px_rgb(0_0_0/0.15)] transition-transform duration-500 ease-[var(--ease-out-expo)] lg:hidden ${
         show ? 'translate-y-0' : 'pointer-events-none translate-y-full'
       }`}
       inert={!show}

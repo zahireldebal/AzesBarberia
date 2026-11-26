@@ -43,7 +43,7 @@ A large, recently opened shop in central Maldonado (Sarandí 650, esquina 33) wi
 - Name: **Azes Barbería**, est. 2021. Logo: copperplate script "Azes", wide-tracked serif "BARBERÍA", ornamental flourishes and the four card suits ♠ ♥ ♣ ♦ (hearts/diamonds red). `logo.png` in repo root.
 - Voice: young, close, direct, rioplatense voseo ("Reservá", "Conocé", "Podés"). Existing lines: "TU MEJOR CORTE, CUANDO QUIERAS." (Fresha) and "Le damos a tu pelo el cambio que necesita" (Instagram bio).
 - Feel requested by the client: premium neighborhood barbershop: masculine, modern, approachable, nothing generic. Built from the real shop and Instagram, not copying their pieces literally.
-- **Standing visual preference (chosen 2026-11-15):** the classic barbershop category standard, executed at full craft: dark ground, warm cream, aged gold, large photography, logo-led. No external reference sites; the craft bar is our own premium execution. Logo red stays for the card suits only.
+- **Standing visual preference (changed 2026-11-25, client request):** black and white, model "Papel": light paper ground (#fafaf8) with black ink, black-and-white photography, black booking buttons. The hero stays dark (photo + light logo) and fades into the page. Previous gold-on-black classic theme retired. The logo keeps its red suits.
 
 ## Evidence on Hand
 

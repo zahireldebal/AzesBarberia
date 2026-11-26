@@ -82,8 +82,8 @@ export function Header({ t, bookHref, homeHref }: Props) {
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,height,backdrop-filter] duration-300 ease-[var(--ease-out-expo)] ${
           compact
-            ? 'h-16 bg-ink/80 shadow-[0_1px_0_rgb(176_141_87/0.25),0_10px_30px_-12px_rgb(0_0_0/0.8)] backdrop-blur-md backdrop-saturate-150 lg:h-[4.5rem]'
-            : 'h-20 bg-gradient-to-b from-ink/85 to-transparent lg:h-24'
+            ? 'h-16 bg-ink/85 shadow-[0_1px_0_var(--color-line),0_10px_30px_-14px_rgb(0_0_0/0.18)] backdrop-blur-md backdrop-saturate-150 lg:h-[4.5rem]'
+            : 'theme-dark h-20 bg-gradient-to-b from-ink/85 to-transparent lg:h-24'
         }`}
       >
         {/* Three columns with equal side tracks keep the logo truly centred. */}
@@ -112,11 +112,11 @@ export function Header({ t, bookHref, homeHref }: Props) {
           <a href={homeHref} className="block justify-self-center" aria-label="Azes Barbería">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/img/logo-light-320.webp"
+              src={compact ? '/img/logo-dark-320.webp' : '/img/logo-light-320.webp'}
               alt=""
               width={320}
               height={278}
-              className={`w-auto drop-shadow-[0_2px_10px_rgb(0_0_0/0.6)] transition-[height] duration-300 ease-[var(--ease-out-expo)] ${
+              className={`w-auto ${compact ? '' : 'drop-shadow-[0_2px_10px_rgb(0_0_0/0.6)]'} transition-[height] duration-300 ease-[var(--ease-out-expo)] ${
                 compact ? 'h-11 lg:h-12' : 'h-14 lg:h-[4.5rem]'
               }`}
             />

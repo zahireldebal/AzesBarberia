@@ -19,6 +19,8 @@ import { removePlayButton } from './retouch.mjs';
  * Without it the pipeline falls back to the classic enhancement chain below.
  */
 const ESRGAN = process.env.REALESRGAN_BIN && existsSync(process.env.REALESRGAN_BIN) ? process.env.REALESRGAN_BIN : null;
+/** Black-and-white photography (site theme "Papel"). */
+const MONO = true;
 const CACHE = path.join(path.resolve(import.meta.dirname, '..'), 'assets-src', '.upscale-cache');
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -76,9 +78,14 @@ async function processJob(job) {
   const meta = job.crop ? { width: job.crop[2], height: job.crop[3] } : await sharp(job.file).metadata();
   const [W, H] = job.size ?? [Math.round(meta.width * job.scale), Math.round(meta.height * job.scale)];
   const cropped = await img.removeAlpha().png().toBuffer();
-  const master = job.profile === 'soft'
+  const enhanced = job.profile === 'soft'
     ? await enhanceSoft(cropped, meta, W, H)
     : await enhance(job.name, cropped, meta, W, H);
+  // Theme "Papel": photos are black and white. Baked into the files (not a CSS
+  // filter) so the browser does no per-frame filtering. Set MONO = false for colour.
+  const master = MONO
+    ? await sharp(enhanced).grayscale().linear(1.05, -6).png().toBuffer()
+    : enhanced;
 
   const widths = WIDTHS.filter((w) => w < W).concat(W);
   await Promise.all(widths.map((w) =>
