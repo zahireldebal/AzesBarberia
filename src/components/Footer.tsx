@@ -7,7 +7,6 @@ import { SuitRule } from './Suits';
 export function Footer({ t, bookHref }: { t: Dict; bookHref: string }) {
   const links = [
     ['#equipo', t.nav.team],
-    ['#servicios', t.nav.services],
     ['#productos', t.nav.products],
     ['#opiniones', t.reviews.title],
     ['#local', t.nav.location],

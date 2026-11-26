@@ -34,7 +34,7 @@ const en: Dict = {
     logoAlt: 'Azes Barbería, since 2021',
     tagline: 'Your best cut, whenever you want.',
     lead: 'A barbershop in central Maldonado. Cuts, fades and beard work with five barbers and online booking.',
-    secondary: 'See services',
+    secondary: 'Meet the team',
     pricesFrom: 'Haircuts from',
     ratingLabel: '{n} reviews on Google',
     hours: 'Mon to Sat · 9am to 7pm',

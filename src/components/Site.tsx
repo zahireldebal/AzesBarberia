@@ -3,7 +3,6 @@ import { BUSINESS, GOOGLE_REVIEWS_URL, SITE_URL, bookingUrl, localePath, type La
 import { SERVICES } from '@/data/services';
 import { Header } from './Header';
 import { Hero } from './Hero';
-import { Services } from './Services';
 import { Team } from './Team';
 import { Products } from './Products';
 import { BeforeAfter } from './BeforeAfter';
@@ -81,7 +80,6 @@ export function Site({ t, lang }: { t: Dict; lang: Lang }) {
         <Hero t={t} bookHref={bookHref} />
         {/* The barbers come first: people pick who cuts them before what */}
         <Team t={t} lang={lang} />
-        <Services t={t} lang={lang} bookHref={bookHref} />
         {/* BRB products and their before/after sit together, above the reviews */}
         <Products t={t} lang={lang} />
         <BeforeAfter t={t} lang={lang} />

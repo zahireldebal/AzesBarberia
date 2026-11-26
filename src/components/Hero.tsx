@@ -61,7 +61,7 @@ export function Hero({ t, bookHref }: Props) {
 
         <div className="hero-rise mt-8 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center" style={{ '--i': 2 } as React.CSSProperties}>
           <BookLink href={bookHref} newTabLabel={t.book.newTab}>{t.book.primary}</BookLink>
-          <a href="#servicios" className="btn btn-line">{t.hero.secondary}</a>
+          <a href="#equipo" className="btn btn-line">{t.hero.secondary}</a>
         </div>
 
         <ul

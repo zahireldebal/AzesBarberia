@@ -34,7 +34,7 @@ const pt: Dict = {
     logoAlt: 'Azes Barbería, desde 2021',
     tagline: 'Seu melhor corte, quando quiser.',
     lead: 'Barbearia no centro de Maldonado. Cortes, degradê e barba com cinco barbeiros e agendamento online.',
-    secondary: 'Ver serviços',
+    secondary: 'Conheça a equipe',
     pricesFrom: 'Cortes a partir de',
     ratingLabel: '{n} avaliações no Google',
     hours: 'Seg a sáb · 9h às 19h',

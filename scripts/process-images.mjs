@@ -19,8 +19,8 @@ import { removePlayButton } from './retouch.mjs';
  * Without it the pipeline falls back to the classic enhancement chain below.
  */
 const ESRGAN = process.env.REALESRGAN_BIN && existsSync(process.env.REALESRGAN_BIN) ? process.env.REALESRGAN_BIN : null;
-/** Black-and-white photography (site theme "Papel"). */
-const MONO = true;
+/** Black-and-white photography. Off: the client wants colour photos on the "Papel" theme. */
+const MONO = false;
 const CACHE = path.join(path.resolve(import.meta.dirname, '..'), 'assets-src', '.upscale-cache');
 
 const ROOT = path.resolve(import.meta.dirname, '..');

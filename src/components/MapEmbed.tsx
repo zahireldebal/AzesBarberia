@@ -14,7 +14,7 @@ export function MapEmbed({ label, note, title }: { label: string; note: string; 
         <iframe
           src={MAPS_EMBED_URL}
           title={title}
-          className="absolute inset-0 size-full border-0 [filter:grayscale(1)_contrast(1.05)]"
+          className="absolute inset-0 size-full border-0"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
         />
