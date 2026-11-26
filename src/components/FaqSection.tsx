@@ -7,7 +7,7 @@ import { SectionHead } from './SectionHead';
 /** Native <details>: keyboard and screen-reader friendly with no JS. */
 export function FaqSection({ t, lang }: { t: Dict; lang: Lang }) {
   return (
-    <section id="preguntas" className="section" aria-labelledby="preguntas-title">
+    <section id="preguntas" className="section bg-ink-2" aria-labelledby="preguntas-title">
       <div className="wrap">
         <SectionHead id="preguntas-title" title={t.faq.title} />
         <div className="reveal mx-auto mt-12 max-w-3xl border-t border-line">

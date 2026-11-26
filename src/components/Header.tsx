@@ -26,15 +26,16 @@ export function Header({ t, bookHref, homeHref }: Props) {
   const panel = useRef<HTMLDivElement>(null);
 
   // Same order as the sections on the page. On desktop the list is split
-  // around the centred logo: two links left, two right.
+  // around the centred logo: three links left, two right.
   const links = [
     ['#equipo', t.nav.team],
     ['#productos', t.nav.products],
+    ['#opiniones', t.reviews.title],
     ['#local', t.nav.location],
     ['#preguntas', t.nav.faq],
   ] as const;
-  const leftLinks = links.slice(0, 2);
-  const rightLinks = links.slice(2);
+  const leftLinks = links.slice(0, 3);
+  const rightLinks = links.slice(3);
   const navLink = (href: string, label: string) => (
     <li key={href}>
       <a href={href} className="nav-link py-3 text-cream/85 no-underline transition-colors hover:text-gold-hi">{label}</a>

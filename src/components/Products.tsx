@@ -22,7 +22,7 @@ export function Products({ t, lang }: { t: Dict; lang: Lang }) {
   const items = withImage.map((p) => ({ name: p.image!, alt: p.imageAlt?.[lang] ?? '', caption: `${p.brand} ${p.name}` }));
 
   return (
-    <section id="productos" className="section" aria-labelledby="productos-title">
+    <section id="productos" className="section bg-ink-2" aria-labelledby="productos-title">
       <div className="wrap">
         <SectionHead id="productos-title" title={t.products.title} intro={t.products.intro} />
 
@@ -75,12 +75,12 @@ export function Products({ t, lang }: { t: Dict; lang: Lang }) {
                 </div>
               )}
 
-              <div className="mt-6 flex items-baseline">
-                <h3 className="font-display text-2xl uppercase tracking-[0.06em]">
+              <div className="mt-6 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-0">
+                <h3 className="font-display text-[1.4rem] uppercase leading-tight tracking-[0.05em] sm:text-2xl sm:tracking-[0.06em]">
                   <span className="text-gold">{p.brand}</span> {p.name}
                 </h3>
-                <span className="leader" aria-hidden />
-                {p.price ? <p className="tabular shrink-0 font-display text-2xl font-semibold text-gold-hi">{formatPrice(p.price, t.locale)}</p> : null}
+                <span className="leader hidden sm:block" aria-hidden />
+                {p.price ? <p className="tabular shrink-0 font-display text-xl font-semibold text-gold-hi sm:text-2xl">{formatPrice(p.price, t.locale)}</p> : null}
               </div>
               <p className="mt-1 text-[0.85rem] uppercase tracking-[0.12em] text-muted">
                 {PRODUCT_CATEGORIES[p.category][lang]}{p.size ? ` · ${p.size}` : ''}

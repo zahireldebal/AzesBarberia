@@ -27,7 +27,7 @@ export function Footer({ t, bookHref }: { t: Dict; bookHref: string }) {
           <nav aria-label={t.nav.menu}>
             <ul className="space-y-1">
               {links.map(([href, label]) => (
-                <li key={href}><a href={href} className="inline-block py-1.5 text-cream/85 no-underline hover:text-gold-hi">{label}</a></li>
+                <li key={href}><a href={href} className="inline-flex min-h-11 items-center text-cream/85 no-underline hover:text-gold-hi">{label}</a></li>
               ))}
             </ul>
           </nav>
@@ -37,7 +37,7 @@ export function Footer({ t, bookHref }: { t: Dict; bookHref: string }) {
             <p className="mt-3">{t.hero.hours}</p>
           </div>
           <div className="flex flex-col items-center gap-4 sm:items-end">
-            <a href={`tel:${BUSINESS.phoneE164}`} className="tabular text-cream/85 hover:text-gold-hi">{BUSINESS.phoneDisplay}</a>
+            <a href={`tel:${BUSINESS.phoneE164}`} className="tabular inline-flex min-h-11 items-center text-cream/85 hover:text-gold-hi">{BUSINESS.phoneDisplay}</a>
             <div className="flex gap-3">
             <a href={BUSINESS.instagram} target="_blank" rel="noopener" className="inline-flex size-12 items-center justify-center border border-line text-2xl text-cream hover:border-gold hover:text-gold-hi">
               <Instagram /><span className="sr-only">{t.footer.follow}</span>

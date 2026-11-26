@@ -20,7 +20,7 @@ export function Reviews({ t, lang }: { t: Dict; lang: Lang }) {
   const count = r.count.toLocaleString(t.locale);
 
   return (
-    <section id="opiniones" className="section" aria-labelledby="opiniones-title">
+    <section id="opiniones" className="section bg-ink-2" aria-labelledby="opiniones-title">
       <div className="wrap">
         <SectionHead id="opiniones-title" title={tr.title} intro={tr.intro} />
 
@@ -88,12 +88,12 @@ export function Reviews({ t, lang }: { t: Dict; lang: Lang }) {
         ) : null}
 
         <div className="reveal mt-14 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener" className="btn btn-line">
+          <a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener" className="btn btn-line w-full sm:w-auto">
             {tr.seeAll}
             <ExternalIcon className="size-[0.95em] opacity-75" />
             <span className="sr-only">{tr.newTab}</span>
           </a>
-          <a href={GOOGLE_WRITE_REVIEW_URL} target="_blank" rel="noopener" className="btn btn-line">
+          <a href={GOOGLE_WRITE_REVIEW_URL} target="_blank" rel="noopener" className="btn btn-line w-full sm:w-auto">
             {tr.write}
             <ExternalIcon className="size-[0.95em] opacity-75" />
             <span className="sr-only">{tr.newTab}</span>
