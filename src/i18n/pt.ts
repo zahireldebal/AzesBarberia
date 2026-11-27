@@ -127,6 +127,12 @@ const pt: Dict = {
     seeAll: 'Ler avaliações no Google',
     write: 'Deixe sua avaliação',
     newTab: '(abre o Google em uma nova aba)',
+    carousel: 'Avaliações de clientes no Google',
+    prev: 'Avaliação anterior',
+    next: 'Próxima avaliação',
+    slide: '{n} de {total}',
+    goTo: 'Ir para a avaliação {n}',
+    translated: 'Traduzido do espanhol',
   },
   faq: { title: 'Perguntas frequentes' },
   footer: {

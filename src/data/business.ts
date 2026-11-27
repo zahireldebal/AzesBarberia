@@ -72,10 +72,10 @@ export const BUSINESS = {
   instagram: 'https://www.instagram.com/azesbarberia/',
   instagramHandle: '@azesbarberia',
   /**
-   * Google Maps rating, read from the public listing on 2026-11-17.
+   * Google Maps rating, read from the public listing on 2026-11-27.
    * `breakdown` = number of reviews per star (5 → 1). Update by hand when it changes.
    */
-  rating: { value: 5, count: 342, source: 'Google', breakdown: { 5: 338, 4: 3, 3: 0, 2: 0, 1: 1 } },
+  rating: { value: 5, count: 347, source: 'Google', breakdown: { 5: 343, 4: 3, 3: 0, 2: 0, 1: 1 } },
   /** 24h, Monday = 1 ... Sunday = 7. Closed days are omitted. */
   hours: [
     { day: 1, open: '09:00', close: '19:00' },

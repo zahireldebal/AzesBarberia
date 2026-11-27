@@ -126,6 +126,12 @@ const en: Dict = {
     seeAll: 'Read reviews on Google',
     write: 'Leave a review',
     newTab: '(opens Google in a new tab)',
+    carousel: 'Client reviews on Google',
+    prev: 'Previous review',
+    next: 'Next review',
+    slide: '{n} of {total}',
+    goTo: 'Go to review {n}',
+    translated: 'Translated from Spanish',
   },
   faq: { title: 'Frequently asked questions' },
   footer: {

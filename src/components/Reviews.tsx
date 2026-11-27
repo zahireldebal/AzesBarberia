@@ -3,6 +3,7 @@ import { BUSINESS, GOOGLE_REVIEWS_URL, GOOGLE_WRITE_REVIEW_URL, type Lang } from
 import { REVIEWS, REVIEW_TOPICS } from '@/data/reviews';
 import { ExternalIcon, Star } from './Icons';
 import { SectionHead } from './SectionHead';
+import { ReviewsSlider } from './ReviewsSlider';
 
 function Stars({ n, className = '' }: { n: number; className?: string }) {
   return (
@@ -70,22 +71,8 @@ export function Reviews({ t, lang }: { t: Dict; lang: Lang }) {
           </div>
         </div>
 
-        {/* Real quotes, only when the client supplies them (src/data/reviews.ts) */}
-        {REVIEWS.length > 0 ? (
-          <ul className="mx-auto mt-16 grid max-w-5xl gap-5 md:grid-cols-3">
-            {REVIEWS.map((rv, i) => (
-              <li key={rv.author + i} className="reveal flex flex-col border border-line bg-ink-2 p-6" style={{ '--i': i } as React.CSSProperties}>
-                <Stars n={rv.stars} className="text-base" />
-                <blockquote className="mt-4 flex-1 text-[0.98rem] leading-relaxed text-cream/90">
-                  “{(lang === 'en' && rv.textEn) || (lang === 'pt' && rv.textPt) || rv.text}”
-                </blockquote>
-                <p className="mt-5 text-[0.85rem] font-semibold uppercase tracking-[0.12em] text-muted">
-                  {rv.author}{rv.when ? <span className="font-normal normal-case tracking-normal"> · {rv.when}</span> : null}
-                </p>
-              </li>
-            ))}
-          </ul>
-        ) : null}
+        {/* Real Google quotes (src/data/reviews.ts) in a swipeable slider */}
+        {REVIEWS.length > 0 ? <ReviewsSlider reviews={REVIEWS} lang={lang} t={tr} /> : null}
 
         <div className="reveal mt-14 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener" className="btn btn-line w-full sm:w-auto">

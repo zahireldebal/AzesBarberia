@@ -124,6 +124,12 @@ const es = {
     seeAll: 'Ver opiniones en Google',
     write: 'Dejá tu opinión',
     newTab: '(abre Google en una pestaña nueva)',
+    carousel: 'Reseñas de clientes en Google',
+    prev: 'Reseña anterior',
+    next: 'Reseña siguiente',
+    slide: '{n} de {total}',
+    goTo: 'Ir a la reseña {n}',
+    translated: '',
   },
   faq: { title: 'Preguntas frecuentes' },
   footer: {
