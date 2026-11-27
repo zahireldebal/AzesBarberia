@@ -6,6 +6,7 @@
 // resample plus a gentle unsharp mask: it adds pixels and crispness, it does
 // not invent detail the source never had.
 import sharp from 'sharp';
+import { versionImages } from './version-images.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -231,3 +232,4 @@ manifest['logo-light'] = { width: logo.width, height: logo.height, widths: [320,
 manifest['logo-dark'] = { width: logo.width, height: logo.height, widths: [320, 640, 960] };
 await fs.writeFile(MANIFEST, JSON.stringify(manifest, null, 2) + '\n');
 console.log(`Processed ${entries.length} images + logo, icon, og.`);
+await versionImages();

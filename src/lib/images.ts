@@ -1,6 +1,7 @@
 import manifest from '@/data/images.generated.json';
 
-export type ImageEntry = { width: number; height: number; widths: number[] };
+/** v: content hash, added to the URL because /img/* is cached as immutable (see scripts/version-images.mjs). */
+export type ImageEntry = { width: number; height: number; widths: number[]; v?: string };
 const IMAGES = manifest as Record<string, ImageEntry>;
 
 export function imageEntry(name: string): ImageEntry {
@@ -9,18 +10,23 @@ export function imageEntry(name: string): ImageEntry {
   return e;
 }
 
+const url = (name: string, w: number) => {
+  const { v } = imageEntry(name);
+  return `/img/${name}-${w}.webp${v ? `?v=${v}` : ''}`;
+};
+
 export function srcSet(name: string): string {
-  return imageEntry(name).widths.map((w) => `/img/${name}-${w}.webp ${w}w`).join(', ');
+  return imageEntry(name).widths.map((w) => `${url(name, w)} ${w}w`).join(', ');
 }
 
 export function largestSrc(name: string): string {
   const { widths } = imageEntry(name);
-  return `/img/${name}-${widths[widths.length - 1]}.webp`;
+  return url(name, widths[widths.length - 1]);
 }
 
 /** A middle width as the fallback src. */
 export function fallbackSrc(name: string): string {
   const { widths } = imageEntry(name);
   const w = widths.find((x) => x >= 768) ?? widths[widths.length - 1];
-  return `/img/${name}-${w}.webp`;
+  return url(name, w);
 }

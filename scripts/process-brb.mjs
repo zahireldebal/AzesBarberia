@@ -10,6 +10,7 @@ import sharp from 'sharp';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { versionImages } from './version-images.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'public', 'img');
@@ -120,3 +121,4 @@ for (const job of JOBS) {
 }
 await fs.writeFile(MANIFEST, JSON.stringify(manifest, null, 2) + '\n');
 console.log(`Processed ${JOBS.length} BRB images.`);
+await versionImages();
