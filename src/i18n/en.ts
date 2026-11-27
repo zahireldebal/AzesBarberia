@@ -65,6 +65,12 @@ const en: Dict = {
     ask: 'Ask on WhatsApp',
     askMessage: 'Hi, I’d like to ask about {product}',
     enlarge: 'Enlarge photo of',
+    orderKicker: 'BRB products',
+    orderTitle: 'Order them on WhatsApp',
+    orderText: 'Tell us which BRB product you want and we’ll arrange pickup at the shop or get it to you.',
+    orderButton: 'Order on WhatsApp',
+    orderMessage: 'Hi, I’d like to order BRB products',
+    orderImageAlt: 'BRB Powder Wax ad: hair without and with BRB, next to the product bottle',
   },
   beforeAfter: {
     title: 'Before and after',

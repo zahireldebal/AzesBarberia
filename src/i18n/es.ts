@@ -63,6 +63,12 @@ const es = {
     ask: 'Consultar por WhatsApp',
     askMessage: 'Hola, quiero consultar por {product}',
     enlarge: 'Ampliar foto de',
+    orderKicker: 'Productos BRB',
+    orderTitle: 'Pedilos por WhatsApp',
+    orderText: 'Escribinos qué producto BRB querés y coordinamos para que lo retires en la barbería o te lo hagamos llegar.',
+    orderButton: 'Pedir por WhatsApp',
+    orderMessage: 'Hola, quiero pedir productos BRB',
+    orderImageAlt: 'Anuncio de BRB Cera en Polvo: comparación sin BRB y con BRB, y el frasco del producto',
   },
   beforeAfter: {
     title: 'Antes y después',

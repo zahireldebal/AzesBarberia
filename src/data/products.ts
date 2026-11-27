@@ -39,13 +39,13 @@ export const PRODUCTS: Product[] = [
     brand: 'BRB',
     name: 'Cera en polvo',
     category: 'styling',
-    size: '10 g',
+    size: '105 g',
     price: 400,
     image: 'producto-cera-en-polvo',
     imageAlt: {
-      es: 'Frasco de Cera en Polvo BRB en la mano de un barbero',
-      en: 'A barber holding a bottle of BRB Powder Wax',
-      pt: 'Um barbeiro segurando um frasco de Cera em Pó BRB',
+      es: 'Frasco negro de Cera en Polvo BRB de 105 g sobre fondo blanco',
+      en: 'Black 105 g bottle of BRB Powder Wax on a white background',
+      pt: 'Frasco preto de Cera em Pó BRB de 105 g sobre fundo branco',
     },
     forWhom: { es: 'Pelo lacio, fino o medio', en: 'Straight, fine or medium hair', pt: 'Cabelo liso, fino ou médio' },
     benefits: {
@@ -57,14 +57,14 @@ export const PRODUCTS: Product[] = [
       before: 'cera-antes',
       after: 'cera-despues',
       beforeAlt: {
-        es: 'Pelo lacio y pesado, sin producto, visto de perfil',
-        en: 'Straight, flat hair with no product, seen in profile',
-        pt: 'Cabelo liso e pesado, sem produto, visto de perfil',
+        es: 'Muchacho de espaldas con gorra: el pelo de la nuca cae lacio y pegado, sin producto',
+        en: 'Young man from behind in a cap: the hair at the nape lies flat, no product',
+        pt: 'Rapaz de costas com boné: o cabelo da nuca cai liso e colado, sem produto',
       },
       afterAlt: {
-        es: 'El mismo pelo con cera en polvo: más textura, volumen y acabado mate',
-        en: 'The same hair with powder wax: more texture, volume and a matte finish',
-        pt: 'O mesmo cabelo com cera em pó: mais textura, volume e acabamento matte',
+        es: 'El mismo pelo con cera en polvo: mechones con textura y volumen',
+        en: 'The same hair with powder wax: textured, voluminous strands',
+        pt: 'O mesmo cabelo com cera em pó: mechas com textura e volume',
       },
       lead: {
         es: 'Textura y volumen al instante, con acabado mate. Deslizá la barra y mirá la diferencia en el mismo pelo.',
@@ -99,9 +99,9 @@ export const PRODUCTS: Product[] = [
     price: 450,
     image: 'producto-pomada-mate',
     imageAlt: {
-      es: 'Mano sosteniendo la Pomada Mate BRB de 50 ml',
-      en: 'A hand holding a 50 ml jar of BRB Matte Pomade',
-      pt: 'Uma mão segurando a Pomada Matte BRB de 50 ml',
+      es: 'Lata negra de Pomada Mate BRB de 50 ml con etiqueta azul, sobre fondo blanco',
+      en: 'Black 50 ml tin of BRB Matte Pomade with a blue label, on a white background',
+      pt: 'Lata preta de Pomada Matte BRB de 50 ml com rótulo azul, sobre fundo branco',
     },
     forWhom: {
       es: 'Pelo lacio u ondulado, medio o grueso',

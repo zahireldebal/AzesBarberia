@@ -65,6 +65,12 @@ const pt: Dict = {
     ask: 'Perguntar pelo WhatsApp',
     askMessage: 'Olá, quero saber sobre {product}',
     enlarge: 'Ampliar foto de',
+    orderKicker: 'Produtos BRB',
+    orderTitle: 'Peça pelo WhatsApp',
+    orderText: 'Conte pra gente qual produto BRB você quer e combinamos a retirada na barbearia ou a entrega.',
+    orderButton: 'Pedir pelo WhatsApp',
+    orderMessage: 'Olá, quero pedir produtos BRB',
+    orderImageAlt: 'Anúncio da Cera em Pó BRB: cabelo sem BRB e com BRB, ao lado do frasco do produto',
   },
   beforeAfter: {
     title: 'Antes e depois',
