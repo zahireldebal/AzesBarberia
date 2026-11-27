@@ -101,21 +101,21 @@
     ]
   },
   "cera-antes": {
-    "width": 1012,
-    "height": 1328,
+    "width": 872,
+    "height": 1264,
     "widths": [
       480,
       768,
-      1012
+      872
     ]
   },
   "cera-despues": {
-    "width": 1012,
-    "height": 1328,
+    "width": 872,
+    "height": 1264,
     "widths": [
       480,
       768,
-      1012
+      872
     ]
   },
   "logo-light": {
@@ -136,12 +136,22 @@
       960
     ]
   },
-  "brb-anuncio": {
-    "width": 768,
-    "height": 1344,
+  "pomada-antes": {
+    "width": 1000,
+    "height": 1398,
     "widths": [
       480,
-      768
+      768,
+      1000
+    ]
+  },
+  "pomada-despues": {
+    "width": 1000,
+    "height": 1398,
+    "widths": [
+      480,
+      768,
+      1000
     ]
   }
 }

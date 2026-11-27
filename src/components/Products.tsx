@@ -103,32 +103,6 @@ export function Products({ t, lang }: { t: Dict; lang: Lang }) {
             </li>
           ))}
         </ul>
-
-        {/* Order banner: the BRB ad + a WhatsApp CTA */}
-        <a
-          href={whatsappUrl(t.products.orderMessage)}
-          target="_blank"
-          rel="noopener"
-          className="reveal group mx-auto mt-20 grid max-w-4xl items-center gap-8 border border-line bg-ink p-5 no-underline transition-colors hover:border-gold/60 sm:grid-cols-[minmax(0,15rem)_1fr] sm:gap-10 sm:p-6"
-        >
-          <span className="frame block aspect-[4/7] w-full max-w-[15rem] justify-self-center overflow-hidden">
-            <Img
-              name="brb-anuncio"
-              alt={t.products.orderImageAlt}
-              sizes="(min-width: 640px) 240px, 80vw"
-              className="size-full object-cover transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.03]"
-            />
-          </span>
-          <span className="flex flex-col items-start text-left">
-            <span className="text-[0.85rem] font-bold uppercase tracking-[0.14em] text-gold-hi">{t.products.orderKicker}</span>
-            <span className="mt-3 font-display text-[2rem] uppercase leading-[1.05] tracking-[0.04em] text-cream sm:text-[2.4rem]">{t.products.orderTitle}</span>
-            <span className="mt-4 max-w-[42ch] text-[1.02rem] text-cream/85">{t.products.orderText}</span>
-            <span className="btn btn-gold mt-7">
-              <WhatsApp className="text-lg" />
-              {t.products.orderButton}
-            </span>
-          </span>
-        </a>
       </div>
 
       <Lightbox group="productos" items={items} index={index} onChange={setIndex} labels={t.lightbox} />

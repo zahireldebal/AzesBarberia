@@ -37,3 +37,6 @@ Thumbs.db
 
 # Cloudflare Wrangler local state
 .wrangler/
+
+# client material drops (originals go to assets-src/, which is ignored too)
+/update3/

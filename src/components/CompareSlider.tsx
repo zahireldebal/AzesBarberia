@@ -14,13 +14,18 @@ type Props = {
 };
 
 const clamp = (v: number) => Math.min(100, Math.max(0, v));
-const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+const easeInOutSine = (t: number) => (1 - Math.cos(Math.PI * t)) / 2;
+
+/** Spring presets (stiffness, damping ratio). Drag: tight follow. Tap/keys: a soft glide. */
+const FOLLOW = { k: 700, zeta: 0.9 };
+const GLIDE = { k: 160, zeta: 0.88 };
 
 /**
  * Before / after comparison. One CSS variable, --p (0..100), drives the
  * divider, the clip of the "después" layer and both labels, so they can never
  * drift apart. Position updates bypass React: a requestAnimationFrame loop
- * eases the current value toward the pointer target and writes --p directly.
+ * runs a time-based spring toward the pointer target (so motion keeps its
+ * momentum and is the same speed at any refresh rate) and writes --p directly.
  * Left of the divider = antes, right = después.
  */
 export function CompareSlider({ before, after, beforeAlt, afterAlt, labels }: Props) {
@@ -28,7 +33,7 @@ export function CompareSlider({ before, after, beforeAlt, afterAlt, labels }: Pr
   const box = useRef<HTMLDivElement>(null);
   const knob = useRef<HTMLSpanElement>(null);
   const [dragging, setDragging] = useState(false);
-  const state = useRef({ current: 50, target: 50, raf: 0, demo: false, touched: false });
+  const state = useRef({ current: 50, target: 50, vel: 0, last: 0, spring: GLIDE, raf: 0, demo: false, touched: false });
   const { width, height } = imageEntry(before);
 
   // Write the position to the DOM (no React render).
@@ -44,19 +49,30 @@ export function CompareSlider({ before, after, beforeAlt, afterAlt, labels }: Pr
     }
   };
 
-  // Ease toward the target; stops itself once settled.
-  const loop = () => {
+  // Spring toward the target; stops itself once settled.
+  const loop = (now: number) => {
     const s = state.current;
-    const diff = s.target - s.current;
-    s.current = Math.abs(diff) < 0.05 ? s.target : s.current + diff * 0.32;
-    paint(s.current);
-    s.raf = s.current === s.target ? 0 : requestAnimationFrame(loop);
+    const dt = Math.min(0.032, s.last ? (now - s.last) / 1000 : 1 / 60);
+    s.last = now;
+    const { k, zeta } = s.spring;
+    // two half steps keep the stiff drag spring stable on slow frames
+    for (let i = 0; i < 2; i++) {
+      const h = dt / 2;
+      const acc = k * (s.target - s.current) - 2 * zeta * Math.sqrt(k) * s.vel;
+      s.vel += acc * h;
+      s.current += s.vel * h;
+    }
+    const settled = Math.abs(s.target - s.current) < 0.02 && Math.abs(s.vel) < 0.05;
+    if (settled) { s.current = s.target; s.vel = 0; }
+    paint(clamp(s.current));
+    s.raf = settled ? 0 : requestAnimationFrame(loop);
   };
-  const goTo = (v: number, instant = false) => {
+  const goTo = (v: number, spring = GLIDE) => {
     const s = state.current;
     s.target = clamp(v);
-    if (instant || reduce) { s.current = s.target; paint(s.current); return; }
-    if (!s.raf) s.raf = requestAnimationFrame(loop);
+    s.spring = spring;
+    if (reduce) { s.current = s.target; s.vel = 0; paint(s.current); return; }
+    if (!s.raf) { s.last = 0; s.raf = requestAnimationFrame(loop); }
   };
 
   const stopDemo = () => {
@@ -65,9 +81,9 @@ export function CompareSlider({ before, after, beforeAlt, afterAlt, labels }: Pr
     s.demo = false;
   };
 
-  const fromClientX = (clientX: number, instant = false) => {
+  const fromClientX = (clientX: number, spring = FOLLOW) => {
     const r = box.current?.getBoundingClientRect();
-    if (r) goTo(((clientX - r.left) / r.width) * 100, instant);
+    if (r) goTo(((clientX - r.left) / r.width) * 100, spring);
   };
 
   useEffect(() => {
@@ -77,11 +93,12 @@ export function CompareSlider({ before, after, beforeAlt, afterAlt, labels }: Pr
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Demo sweep once in view: centre → most of the antes → most of the después → centre.
+  // Demo sweep once in view: one continuous wave from the centre toward the antes,
+  // across to the después and back to the centre, eased only at the start and end.
   useEffect(() => {
     if (reduce || !box.current) return;
-    const keyframes = [50, 80, 20, 50];
-    const seg = 1000;
+    const duration = 2600;
+    const reach = 28;
     let raf = 0;
     const io = new IntersectionObserver(
       ([e]) => {
@@ -92,13 +109,12 @@ export function CompareSlider({ before, after, beforeAlt, afterAlt, labels }: Pr
         const start = performance.now() + 400;
         const step = (now: number) => {
           if (!s.demo) return;
-          const t = Math.max(0, now - start);
-          const i = Math.min(keyframes.length - 2, Math.floor(t / seg));
-          const local = Math.min(1, (t - i * seg) / seg);
-          const v = keyframes[i] + (keyframes[i + 1] - keyframes[i]) * easeInOut(local);
+          const t = Math.min(1, Math.max(0, now - start) / duration);
+          const v = 50 + reach * Math.sin(2 * Math.PI * easeInOutSine(t));
           s.current = s.target = v;
+          s.vel = 0;
           paint(v);
-          if (t < seg * (keyframes.length - 1)) raf = requestAnimationFrame(step);
+          if (t < 1) raf = requestAnimationFrame(step);
           else s.demo = false;
         };
         raf = requestAnimationFrame(step);
@@ -114,14 +130,14 @@ export function CompareSlider({ before, after, beforeAlt, afterAlt, labels }: Pr
     stopDemo();
     setDragging(true);
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-    fromClientX(e.clientX);
+    fromClientX(e.clientX, GLIDE);
   };
   const onPointerMove = (e: React.PointerEvent) => {
     if (!dragging) return;
     // coalesced events give the full-resolution path on fast drags
     const events = e.nativeEvent.getCoalescedEvents?.() ?? [];
     const last = events.length ? events[events.length - 1] : e.nativeEvent;
-    fromClientX(last.clientX);
+    fromClientX(last.clientX, FOLLOW);
   };
   const onPointerUp = () => setDragging(false);
 
@@ -146,7 +162,7 @@ export function CompareSlider({ before, after, beforeAlt, afterAlt, labels }: Pr
     <div>
       <div
         ref={box}
-        className={`frame relative select-none touch-pan-y ${dragging ? 'cursor-grabbing' : 'cursor-ew-resize'}`}
+        className={`frame relative select-none touch-pan-y [container-type:inline-size] ${dragging ? 'cursor-grabbing' : 'cursor-ew-resize'}`}
         style={{ aspectRatio: `${width} / ${height}`, ['--p' as string]: 50 }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
@@ -172,8 +188,8 @@ export function CompareSlider({ before, after, beforeAlt, afterAlt, labels }: Pr
 
         {/* divider: cream hairline + gold diamond handle, positioned by the same --p */}
         <div
-          className="pointer-events-none absolute inset-y-0 left-0 z-20 w-0 [transform:translateZ(0)]"
-          style={{ left: 'calc(var(--p) * 1%)' }}
+          className="pointer-events-none absolute inset-y-0 left-0 z-20 w-0 will-change-transform"
+          style={{ transform: 'translate3d(calc(var(--p) * 1cqw), 0, 0)' }}
         >
           <span className="absolute inset-y-0 -left-px w-0.5 bg-white shadow-[0_0_10px_rgb(0_0_0/0.45)]" />
           <span
